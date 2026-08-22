@@ -72,6 +72,7 @@ button{
     color:white;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 button:active{
@@ -176,6 +177,12 @@ button:active{
     gap:8px;
 }
 
+.loading{
+    text-align:center;
+    padding:20px;
+    color:#64748b;
+}
+
 @media(max-width:500px){
     .report-buttons{
         grid-template-columns:1fr;
@@ -235,7 +242,7 @@ hr{
 
 <div class="container">
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 
 <div id="loginPage" class="card">
 
@@ -255,11 +262,13 @@ hr{
         autocomplete="current-password"
     >
 
-    <button onclick="login()">LOGIN</button>
+    <button onclick="login()">
+        LOGIN
+    </button>
 
-    <button id="createAccountBtn"
-            class="gray"
-            onclick="showRegister()">
+    <button
+        class="gray"
+        onclick="showRegister()">
         CREATE ACCOUNT
     </button>
 
@@ -268,7 +277,7 @@ hr{
 </div>
 
 
-<!-- ================= REGISTER ================= -->
+<!-- REGISTER -->
 
 <div id="registerPage" class="card hidden">
 
@@ -295,11 +304,15 @@ hr{
         autocomplete="new-password"
     >
 
-    <button class="green" onclick="register()">
+    <button
+        class="green"
+        onclick="register()">
         REGISTER
     </button>
 
-    <button class="gray" onclick="showLogin()">
+    <button
+        class="gray"
+        onclick="showLogin()">
         BACK TO LOGIN
     </button>
 
@@ -308,7 +321,7 @@ hr{
 </div>
 
 
-<!-- ================= APP ================= -->
+<!-- APP -->
 
 <div id="appPage" class="hidden">
 
@@ -317,7 +330,9 @@ hr{
         <strong id="currentUser"></strong>
     </div>
 
-    <button class="red no-print" onclick="logout()">
+    <button
+        class="red no-print"
+        onclick="logout()">
         LOGOUT
     </button>
 
@@ -347,7 +362,7 @@ hr{
 
             <div class="stat">
                 💵 Sales
-                <strong id="salesTotal">₱0</strong>
+                <strong id="salesTotal">₱0.00</strong>
             </div>
 
         </div>
@@ -378,7 +393,7 @@ hr{
     </div>
 
 
-    <!-- ================= UNITS ================= -->
+    <!-- UNITS -->
 
     <div id="unitsSection" class="card">
 
@@ -422,7 +437,9 @@ hr{
             placeholder="Price"
         >
 
-        <button class="green" onclick="addUnit()">
+        <button
+            class="green"
+            onclick="addUnit()">
             ADD UNIT
         </button>
 
@@ -440,9 +457,11 @@ hr{
     </div>
 
 
-    <!-- ================= ACCESSORIES ================= -->
+    <!-- ACCESSORIES -->
 
-    <div id="accessoriesSection" class="card hidden">
+    <div
+        id="accessoriesSection"
+        class="card hidden">
 
         <h2>🎧 Accessories</h2>
 
@@ -478,7 +497,9 @@ hr{
             placeholder="Price"
         >
 
-        <button class="green" onclick="addAccessory()">
+        <button
+            class="green"
+            onclick="addAccessory()">
             ADD ACCESSORY
         </button>
 
@@ -496,9 +517,11 @@ hr{
     </div>
 
 
-    <!-- ================= SOLD ================= -->
+    <!-- SOLD -->
 
-    <div id="soldSection" class="card hidden">
+    <div
+        id="soldSection"
+        class="card hidden">
 
         <h2>💰 Sold Items</h2>
 
@@ -518,9 +541,11 @@ hr{
     </div>
 
 
-    <!-- ================= REPORTS ================= -->
+    <!-- REPORTS -->
 
-    <div id="reportsSection" class="card hidden">
+    <div
+        id="reportsSection"
+        class="card hidden">
 
         <h2>📊 Reports</h2>
 
@@ -538,11 +563,15 @@ hr{
                 🖨️ PRINT SALES
             </button>
 
-            <button class="green" onclick="downloadInventoryCSV()">
+            <button
+                class="green"
+                onclick="downloadInventoryCSV()">
                 📥 INVENTORY CSV
             </button>
 
-            <button class="green" onclick="downloadSalesCSV()">
+            <button
+                class="green"
+                onclick="downloadSalesCSV()">
                 📥 SALES CSV
             </button>
 
@@ -552,7 +581,7 @@ hr{
 
         <p class="small">
             Tip: Sa Print screen ng phone, piliin ang
-            <strong>Save as PDF</strong> kung gusto mong gawing PDF.
+            <strong>Save as PDF</strong>.
         </p>
 
     </div>
@@ -562,64 +591,46 @@ hr{
 </div>
 
 
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
 /* =====================================================
-   DATA
+   SUPABASE CONFIG
 ===================================================== */
 
-let users = loadData("mg_users", []);
+const SUPABASE_URL =
+    "https://uafqqibdlozxcvrcauym.supabase.co";
 
-let units = loadData("mg_units", []);
+const SUPABASE_KEY =
+    "sb_publishable_mJtPMhty7Bi89Y5C6Nz_yg_PDRClrMz";
 
-let accessories = loadData("mg_accessories", []);
+const {
+    createClient
+} = supabase;
 
-let sales = loadData("mg_sales", []);
-
-let currentUser =
-    localStorage.getItem("mg_current_user");
-
-
-function loadData(key, fallback){
-
-    try{
-
-        const value =
-            localStorage.getItem(key);
-
-        return value
-            ? JSON.parse(value)
-            : fallback;
-
-    }catch(e){
-
-        return fallback;
-    }
-}
-
-
-function saveData(){
-
-    localStorage.setItem(
-        "mg_users",
-        JSON.stringify(users)
+const db =
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
 
-    localStorage.setItem(
-        "mg_units",
-        JSON.stringify(units)
-    );
 
-    localStorage.setItem(
-        "mg_accessories",
-        JSON.stringify(accessories)
-    );
+/* =====================================================
+   GLOBAL DATA
+===================================================== */
 
-    localStorage.setItem(
-        "mg_sales",
-        JSON.stringify(sales)
-    );
-}
+let units = [];
+
+let accessories = [];
+
+let sales = [];
+
+let currentUser = null;
+
+let currentProfile = null;
 
 
 /* =====================================================
@@ -641,10 +652,13 @@ function money(value){
 
     return "₱" +
         Number(value || 0)
-        .toLocaleString("en-PH",{
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        });
+        .toLocaleString(
+            "en-PH",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
 }
 
 
@@ -656,6 +670,14 @@ function now(){
             dateStyle:"long",
             timeStyle:"short"
         }
+    );
+}
+
+
+function showError(message){
+
+    alert(
+        "Error:\n\n" + message
     );
 }
 
@@ -712,8 +734,6 @@ function showLogin(){
     document
         .getElementById("appPage")
         .classList.add("hidden");
-
-    updateRegisterButton();
 }
 
 
@@ -733,25 +753,16 @@ function showRegister(){
 }
 
 
-function updateRegisterButton(){
+function usernameEmail(username){
 
-    const btn =
-        document.getElementById(
-            "createAccountBtn"
-        );
-
-    if(users.length > 0){
-
-        btn.classList.add("hidden");
-
-    }else{
-
-        btn.classList.remove("hidden");
-    }
+    return username
+        .toLowerCase()
+        .replace(/[^a-z0-9._-]/g,"")
+        + "@mg-gadgets.local";
 }
 
 
-function register(){
+async function register(){
 
     const username =
         document
@@ -808,52 +819,101 @@ function register(){
     }
 
 
-    const exists =
-        users.some(
-            u =>
-            u.username.toLowerCase()
-            === username.toLowerCase()
-        );
+    message.className="small";
+
+    message.textContent =
+        "Creating account...";
 
 
-    if(exists){
+    try{
+
+        const email =
+            usernameEmail(username);
+
+
+        const {
+            data,
+            error
+        } =
+        await db.auth.signUp({
+
+            email:email,
+
+            password:password
+
+        });
+
+
+        if(error){
+
+            throw error;
+        }
+
+
+        if(!data.user){
+
+            throw new Error(
+                "Account was not created."
+            );
+        }
+
+
+        /*
+         * Create profile.
+         */
+
+        const {
+            error:profileError
+        } =
+        await db
+        .from("profiles")
+        .insert({
+
+            id:data.user.id,
+
+            username:username
+
+        });
+
+
+        if(
+            profileError &&
+            !profileError.message
+            .toLowerCase()
+            .includes("duplicate")
+        ){
+
+            console.warn(
+                profileError
+            );
+        }
+
+
+        if(!data.session){
+
+            message.className="success";
+
+            message.textContent =
+                "Account created. Please check your email if confirmation is required, then login.";
+
+            return;
+        }
+
+
+        await loadCurrentUser();
+
+    }catch(error){
 
         message.className="error";
 
         message.textContent =
-            "Username already exists.";
-
-        return;
+            error.message ||
+            "Registration failed.";
     }
-
-
-    users.push({
-
-        id:Date.now(),
-
-        username:username,
-
-        password:password
-
-    });
-
-
-    saveData();
-
-
-    currentUser = username;
-
-    localStorage.setItem(
-        "mg_current_user",
-        currentUser
-    );
-
-
-    openApp();
 }
 
 
-function login(){
+async function login(){
 
     const username =
         document
@@ -866,55 +926,175 @@ function login(){
         .getElementById("loginPassword")
         .value;
 
-
-    const user =
-        users.find(
-            u =>
-            u.username === username &&
-            u.password === password
-        );
-
-
     const message =
         document.getElementById(
             "loginMessage"
         );
 
 
-    if(!user){
+    if(!username || !password){
 
         message.className="error";
 
         message.textContent =
+            "Enter username and password.";
+
+        return;
+    }
+
+
+    message.className="small";
+
+    message.textContent =
+        "Logging in...";
+
+
+    try{
+
+        const email =
+            usernameEmail(username);
+
+
+        const {
+            error
+        } =
+        await db.auth.signInWithPassword({
+
+            email:email,
+
+            password:password
+
+        });
+
+
+        if(error){
+
+            throw error;
+        }
+
+
+        await loadCurrentUser();
+
+    }catch(error){
+
+        message.className="error";
+
+        message.textContent =
+            error.message ||
             "Incorrect username or password.";
+    }
+}
+
+
+async function logout(){
+
+    await db.auth.signOut();
+
+    currentUser=null;
+
+    currentProfile=null;
+
+    units=[];
+
+    accessories=[];
+
+    sales=[];
+
+    showLogin();
+}
+
+
+/* =====================================================
+   CURRENT USER
+===================================================== */
+
+async function loadCurrentUser(){
+
+    const {
+        data,
+        error
+    } =
+    await db.auth.getUser();
+
+
+    if(error || !data.user){
+
+        showLogin();
 
         return;
     }
 
 
     currentUser =
-        user.username;
+        data.user;
 
 
-    localStorage.setItem(
-        "mg_current_user",
-        currentUser
-    );
+    /*
+     * Try existing profile.
+     */
+
+    let {
+        data:profile
+    } =
+    await db
+    .from("profiles")
+    .select("*")
+    .eq("id",currentUser.id)
+    .maybeSingle();
 
 
-    openApp();
-}
+    /*
+     * Create profile if missing.
+     */
+
+    if(!profile){
+
+        const fallbackUsername =
+            currentUser.email
+            ?.split("@")[0] ||
+            "user";
 
 
-function logout(){
+        const result =
+        await db
+        .from("profiles")
+        .insert({
 
-    currentUser = null;
+            id:currentUser.id,
 
-    localStorage.removeItem(
-        "mg_current_user"
-    );
+            username:fallbackUsername
 
-    showLogin();
+        })
+        .select()
+        .single();
+
+
+        if(result.error){
+
+            console.error(
+                result.error
+            );
+
+        }else{
+
+            profile =
+                result.data;
+        }
+    }
+
+
+    currentProfile =
+        profile;
+
+
+    document
+        .getElementById("currentUser")
+        .textContent =
+        profile?.username ||
+        currentUser.email;
+
+
+    await openApp();
 }
 
 
@@ -922,7 +1102,7 @@ function logout(){
    APP
 ===================================================== */
 
-function openApp(){
+async function openApp(){
 
     document
         .getElementById("loginPage")
@@ -940,16 +1120,12 @@ function openApp(){
     document
         .getElementById("currentUser")
         .textContent =
-        currentUser;
+        currentProfile?.username ||
+        currentUser?.email ||
+        "";
 
 
-    displayUnits();
-
-    displayAccessories();
-
-    displaySales();
-
-    updateDashboard();
+    await loadAllData();
 }
 
 
@@ -981,6 +1157,95 @@ function showSection(id){
 
 
 /* =====================================================
+   LOAD DATA FROM SUPABASE
+===================================================== */
+
+async function loadAllData(){
+
+    document
+        .getElementById("unitsList")
+        .innerHTML =
+        "<p class='loading'>Loading inventory...</p>";
+
+
+    const [
+        unitsResult,
+        accessoriesResult,
+        salesResult
+    ] =
+    await Promise.all([
+
+        db
+        .from("units")
+        .select("*")
+        .order("added_at",{ascending:false}),
+
+        db
+        .from("accessories")
+        .select("*")
+        .order("added_at",{ascending:false}),
+
+        db
+        .from("sales")
+        .select("*")
+        .order("sold_at",{ascending:false})
+
+    ]);
+
+
+    if(unitsResult.error){
+
+        showError(
+            unitsResult.error.message
+        );
+
+        return;
+    }
+
+
+    if(accessoriesResult.error){
+
+        showError(
+            accessoriesResult.error.message
+        );
+
+        return;
+    }
+
+
+    if(salesResult.error){
+
+        showError(
+            salesResult.error.message
+        );
+
+        return;
+    }
+
+
+    units =
+        unitsResult.data || [];
+
+
+    accessories =
+        accessoriesResult.data || [];
+
+
+    sales =
+        salesResult.data || [];
+
+
+    displayUnits();
+
+    displayAccessories();
+
+    displaySales();
+
+    updateDashboard();
+}
+
+
+/* =====================================================
    DASHBOARD
 ===================================================== */
 
@@ -995,7 +1260,8 @@ function updateDashboard(){
     const accessoryTotal =
         accessories.reduce(
             (total,item) =>
-                total + Number(item.stock || 0),
+                total +
+                Number(item.stock || 0),
             0
         );
 
@@ -1016,7 +1282,9 @@ function updateDashboard(){
         sales.reduce(
             (sum,sale) =>
                 sum +
-                Number(sale.price || 0),
+                Number(
+                    sale.selling_price || 0
+                ),
             0
         );
 
@@ -1032,7 +1300,7 @@ function updateDashboard(){
    UNITS
 ===================================================== */
 
-function addUnit(){
+async function addUnit(){
 
     const name =
         document.getElementById(
@@ -1073,7 +1341,7 @@ function addUnit(){
         !model ||
         !color ||
         !imei ||
-        price <= 0
+        price<=0
     ){
 
         alert(
@@ -1084,25 +1352,13 @@ function addUnit(){
     }
 
 
-    if(
-        units.some(
-            u => u.imei === imei
-        )
-    ){
-
-        alert(
-            "This IMEI already exists."
-        );
-
-        return;
-    }
-
-
-    units.push({
-
-        id:Date.now(),
-
-        type:"Unit",
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("units")
+    .insert({
 
         name:name,
 
@@ -1116,14 +1372,24 @@ function addUnit(){
 
         price:price,
 
-        addedBy:currentUser,
+        added_by:currentUser.id
 
-        addedAt:now()
+    })
+    .select()
+    .single();
 
-    });
+
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
 
 
-    saveData();
+    units.unshift(data);
 
 
     clearUnitForm();
@@ -1162,7 +1428,8 @@ function displayUnits(){
     const search =
         document.getElementById(
             "unitSearch"
-        ).value.toLowerCase();
+        ).value
+        .toLowerCase();
 
 
     list.innerHTML="";
@@ -1206,7 +1473,9 @@ function displayUnits(){
 
         div.innerHTML=`
 
-            <h3>📱 ${safe(unit.name)}</h3>
+            <h3>
+                📱 ${safe(unit.name)}
+            </h3>
 
             <p>
                 <strong>Brand:</strong>
@@ -1233,14 +1502,15 @@ function displayUnits(){
                 ${money(unit.price)}
             </p>
 
-            <p>
-                <strong>Added By:</strong>
-                ${safe(unit.addedBy)}
-            </p>
-
             <p class="small">
                 📅 Added:
-                ${safe(unit.addedAt)}
+                ${safe(
+                    new Date(
+                        unit.added_at
+                    ).toLocaleString(
+                        "en-PH"
+                    )
+                )}
             </p>
 
             <span class="badge">
@@ -1249,19 +1519,19 @@ function displayUnits(){
 
             <button
                 class="green"
-                onclick="sellUnit(${unit.id})">
+                onclick="sellUnit('${unit.id}')">
                 SELL UNIT
             </button>
 
             <button
                 class="gray"
-                onclick="editUnit(${unit.id})">
+                onclick="editUnit('${unit.id}')">
                 EDIT
             </button>
 
             <button
                 class="red"
-                onclick="deleteUnit(${unit.id})">
+                onclick="deleteUnit('${unit.id}')">
                 DELETE
             </button>
 
@@ -1278,7 +1548,7 @@ function displayUnits(){
    EDIT UNIT
 ===================================================== */
 
-function editUnit(id){
+async function editUnit(id){
 
     const unit =
         units.find(
@@ -1343,20 +1613,50 @@ function editUnit(id){
     if(price===null)return;
 
 
-    unit.name=name.trim();
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("units")
+    .update({
 
-    unit.brand=brand.trim();
+        name:name.trim(),
 
-    unit.model=model.trim();
+        brand:brand.trim(),
 
-    unit.color=color.trim();
+        model:model.trim(),
 
-    unit.imei=imei.trim();
+        color:color.trim(),
 
-    unit.price=Number(price);
+        imei:imei.trim(),
+
+        price:Number(price)
+
+    })
+    .eq("id",id)
+    .select()
+    .single();
 
 
-    saveData();
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
+
+
+    units =
+        units.map(
+            u =>
+            u.id===id
+            ? data
+            : u
+        );
+
 
     displayUnits();
 
@@ -1364,7 +1664,7 @@ function editUnit(id){
 }
 
 
-function deleteUnit(id){
+async function deleteUnit(id){
 
     if(
         !confirm(
@@ -1373,13 +1673,30 @@ function deleteUnit(id){
     )return;
 
 
+    const {
+        error
+    } =
+    await db
+    .from("units")
+    .delete()
+    .eq("id",id);
+
+
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
+
+
     units =
         units.filter(
             u => u.id!==id
         );
 
-
-    saveData();
 
     displayUnits();
 
@@ -1391,7 +1708,7 @@ function deleteUnit(id){
    ACCESSORIES
 ===================================================== */
 
-function addAccessory(){
+async function addAccessory(){
 
     const name =
         document.getElementById(
@@ -1439,11 +1756,13 @@ function addAccessory(){
     }
 
 
-    accessories.push({
-
-        id:Date.now(),
-
-        type:"Accessory",
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("accessories")
+    .insert({
 
         name:name,
 
@@ -1455,14 +1774,24 @@ function addAccessory(){
 
         price:price,
 
-        addedBy:currentUser,
+        added_by:currentUser.id
 
-        addedAt:now()
+    })
+    .select()
+    .single();
 
-    });
+
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
 
 
-    saveData();
+    accessories.unshift(data);
 
 
     [
@@ -1535,7 +1864,9 @@ function displayAccessories(){
 
         div.innerHTML=`
 
-            <h3>🎧 ${safe(item.name)}</h3>
+            <h3>
+                🎧 ${safe(item.name)}
+            </h3>
 
             <p>
                 <strong>Brand:</strong>
@@ -1557,14 +1888,15 @@ function displayAccessories(){
                 ${money(item.price)}
             </p>
 
-            <p>
-                <strong>Added By:</strong>
-                ${safe(item.addedBy)}
-            </p>
-
             <p class="small">
                 📅 Added:
-                ${safe(item.addedAt)}
+                ${safe(
+                    new Date(
+                        item.added_at
+                    ).toLocaleString(
+                        "en-PH"
+                    )
+                )}
             </p>
 
             <span class="badge accessorybadge">
@@ -1573,19 +1905,19 @@ function displayAccessories(){
 
             <button
                 class="green"
-                onclick="sellAccessory(${item.id})">
+                onclick="sellAccessory('${item.id}')">
                 SELL ACCESSORY
             </button>
 
             <button
                 class="gray"
-                onclick="editAccessory(${item.id})">
+                onclick="editAccessory('${item.id}')">
                 EDIT
             </button>
 
             <button
                 class="red"
-                onclick="deleteAccessory(${item.id})">
+                onclick="deleteAccessory('${item.id}')">
                 DELETE
             </button>
 
@@ -1602,7 +1934,7 @@ function displayAccessories(){
    EDIT ACCESSORY
 ===================================================== */
 
-function editAccessory(id){
+async function editAccessory(id){
 
     const item =
         accessories.find(
@@ -1658,18 +1990,48 @@ function editAccessory(id){
     if(price===null)return;
 
 
-    item.name=name.trim();
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("accessories")
+    .update({
 
-    item.brand=brand.trim();
+        name:name.trim(),
 
-    item.color=color.trim();
+        brand:brand.trim(),
 
-    item.stock=Number(stock);
+        color:color.trim(),
 
-    item.price=Number(price);
+        stock:Number(stock),
+
+        price:Number(price)
+
+    })
+    .eq("id",id)
+    .select()
+    .single();
 
 
-    saveData();
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
+
+
+    accessories =
+        accessories.map(
+            a =>
+            a.id===id
+            ? data
+            : a
+        );
+
 
     displayAccessories();
 
@@ -1677,7 +2039,7 @@ function editAccessory(id){
 }
 
 
-function deleteAccessory(id){
+async function deleteAccessory(id){
 
     if(
         !confirm(
@@ -1686,13 +2048,30 @@ function deleteAccessory(id){
     )return;
 
 
+    const {
+        error
+    } =
+    await db
+    .from("accessories")
+    .delete()
+    .eq("id",id);
+
+
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
+
+
     accessories =
         accessories.filter(
             a => a.id!==id
         );
 
-
-    saveData();
 
     displayAccessories();
 
@@ -1704,7 +2083,7 @@ function deleteAccessory(id){
    SELL UNIT
 ===================================================== */
 
-function sellUnit(id){
+async function sellUnit(id){
 
     const unit =
         units.find(
@@ -1765,15 +2144,21 @@ function sellUnit(id){
     }
 
 
-    sales.push({
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("sales")
+    .insert({
 
-        id:Date.now(),
+        item_type:"Unit",
 
-        type:"Unit",
+        unit_id:unit.id,
 
-        itemId:unit.id,
+        accessory_id:null,
 
-        itemName:unit.name,
+        item_name:unit.name,
 
         brand:unit.brand,
 
@@ -1783,34 +2168,72 @@ function sellUnit(id){
 
         imei:unit.imei,
 
-        buyer:buyer.trim(),
-
         quantity:1,
 
-        price:salePrice,
+        buyer_name:buyer.trim(),
 
-        payment:payment,
+        selling_price:salePrice,
 
-        soldBy:currentUser,
+        payment_method:payment,
 
-        soldAt:now(),
+        sold_by:currentUser.id
 
-        originalItem:{
+    })
+    .select()
+    .single();
 
-            ...unit
 
-        }
+    if(error){
 
-    });
+        showError(
+            error.message
+        );
 
+        return;
+    }
+
+
+    /*
+     * Remove unit from inventory.
+     */
+
+    const {
+        error:deleteError
+    } =
+    await db
+    .from("units")
+    .delete()
+    .eq("id",unit.id);
+
+
+    if(deleteError){
+
+        /*
+         * Roll back the sale if
+         * inventory deletion fails.
+         */
+
+        await db
+            .from("sales")
+            .delete()
+            .eq("id",data.id);
+
+
+        showError(
+            deleteError.message
+        );
+
+        return;
+    }
+
+
+    sales.unshift(data);
 
     units =
         units.filter(
-            u => u.id!==id
+            u => u.id!==unit.id
         );
 
-
-    saveData();
 
     displayUnits();
 
@@ -1829,7 +2252,7 @@ function sellUnit(id){
    SELL ACCESSORY
 ===================================================== */
 
-function sellAccessory(id){
+async function sellAccessory(id){
 
     const item =
         accessories.find(
@@ -1918,15 +2341,25 @@ function sellAccessory(id){
     }
 
 
-    sales.push({
+    const total =
+        price * quantity;
 
-        id:Date.now(),
 
-        type:"Accessory",
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("sales")
+    .insert({
 
-        itemId:item.id,
+        item_type:"Accessory",
 
-        itemName:item.name,
+        unit_id:null,
+
+        accessory_id:item.id,
+
+        item_name:item.name,
 
         brand:item.brand,
 
@@ -1936,33 +2369,79 @@ function sellAccessory(id){
 
         imei:"N/A",
 
-        buyer:buyer.trim(),
-
         quantity:quantity,
 
-        price:price * quantity,
+        buyer_name:buyer.trim(),
 
-        unitPrice:price,
+        selling_price:total,
 
-        payment:payment,
+        payment_method:payment,
 
-        soldBy:currentUser,
+        sold_by:currentUser.id
 
-        soldAt:now(),
-
-        originalItem:{
-
-            ...item
-
-        }
-
-    });
+    })
+    .select()
+    .single();
 
 
-    item.stock -= quantity;
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
 
 
-    saveData();
+    const newStock =
+        Number(item.stock) -
+        quantity;
+
+
+    const {
+        data:updatedItem,
+        error:updateError
+    } =
+    await db
+    .from("accessories")
+    .update({
+
+        stock:newStock
+
+    })
+    .eq("id",item.id)
+    .select()
+    .single();
+
+
+    if(updateError){
+
+        await db
+            .from("sales")
+            .delete()
+            .eq("id",data.id);
+
+
+        showError(
+            updateError.message
+        );
+
+        return;
+    }
+
+
+    sales.unshift(data);
+
+
+    accessories =
+        accessories.map(
+            a =>
+            a.id===item.id
+            ? updatedItem
+            : a
+        );
+
 
     displayAccessories();
 
@@ -1998,12 +2477,10 @@ function displaySales(){
 
 
     const filtered =
-        [...sales]
-        .reverse()
-        .filter(
+        sales.filter(
             sale =>
             (
-                sale.itemName +
+                sale.item_name +
                 " " +
                 sale.brand +
                 " " +
@@ -2013,11 +2490,9 @@ function displaySales(){
                 " " +
                 sale.imei +
                 " " +
-                sale.buyer +
+                sale.buyer_name +
                 " " +
-                sale.soldBy +
-                " " +
-                sale.payment
+                sale.payment_method
             )
             .toLowerCase()
             .includes(search)
@@ -2042,7 +2517,7 @@ function displaySales(){
 
 
         const typeBadge =
-            sale.type==="Unit"
+            sale.item_type==="Unit"
             ? "badge soldbadge"
             : "badge accessorybadge";
 
@@ -2050,12 +2525,17 @@ function displaySales(){
         div.innerHTML=`
 
             <h3>
-                ${sale.type==="Unit" ? "📱" : "🎧"}
-                ${safe(sale.itemName)}
+                ${
+                    sale.item_type==="Unit"
+                    ? "📱"
+                    : "🎧"
+                }
+
+                ${safe(sale.item_name)}
             </h3>
 
             <span class="${typeBadge}">
-                ${safe(sale.type)} — SOLD
+                ${safe(sale.item_type)} — SOLD
             </span>
 
             <p>
@@ -2085,38 +2565,39 @@ function displaySales(){
 
             <p>
                 <strong>Buyer:</strong>
-                ${safe(sale.buyer)}
+                ${safe(sale.buyer_name)}
             </p>
 
             <p>
                 <strong>Selling Price:</strong>
-                ${money(sale.price)}
+                ${money(sale.selling_price)}
             </p>
 
             <p>
                 <strong>Mode of Payment:</strong>
-                ${safe(sale.payment)}
-            </p>
-
-            <p>
-                🔒 <strong>Sold By:</strong>
-                ${safe(sale.soldBy)}
+                ${safe(sale.payment_method)}
             </p>
 
             <p class="small">
                 📅 <strong>Date & Time Sold:</strong><br>
-                ${safe(sale.soldAt)}
+                ${safe(
+                    new Date(
+                        sale.sold_at
+                    ).toLocaleString(
+                        "en-PH"
+                    )
+                )}
             </p>
 
             <button
                 class="gray"
-                onclick="editSale(${sale.id})">
+                onclick="editSale('${sale.id}')">
                 EDIT SOLD ITEM
             </button>
 
             <button
                 class="red"
-                onclick="deleteSale(${sale.id})">
+                onclick="deleteSale('${sale.id}')">
                 DELETE SALE
             </button>
 
@@ -2131,10 +2612,9 @@ function displaySales(){
 
 /* =====================================================
    EDIT SALE
-   SOLD BY IS NOT EDITABLE
 ===================================================== */
 
-function editSale(id){
+async function editSale(id){
 
     const sale =
         sales.find(
@@ -2148,7 +2628,7 @@ function editSale(id){
     const buyer =
         prompt(
             "Buyer Name:",
-            sale.buyer
+            sale.buyer_name
         );
 
     if(buyer===null)return;
@@ -2166,7 +2646,7 @@ function editSale(id){
     const price =
         prompt(
             "Selling Price:",
-            sale.price
+            sale.selling_price
         );
 
     if(price===null)return;
@@ -2175,27 +2655,66 @@ function editSale(id){
     const payment =
         prompt(
             "Mode of Payment:",
-            sale.payment
+            sale.payment_method
         );
 
     if(payment===null)return;
 
 
-    sale.buyer=buyer.trim();
+    if(
+        !buyer.trim() ||
+        Number(price)<=0 ||
+        !payment.trim()
+    ){
 
-    sale.color=color.trim();
+        alert(
+            "Invalid information."
+        );
 
-    sale.price=Number(price);
-
-    sale.payment=payment.trim();
-
-
-    /* IMPORTANT:
-       soldBy is intentionally NOT changed.
-    */
+        return;
+    }
 
 
-    saveData();
+    const {
+        data,
+        error
+    } =
+    await db
+    .from("sales")
+    .update({
+
+        buyer_name:buyer.trim(),
+
+        color:color.trim(),
+
+        selling_price:Number(price),
+
+        payment_method:payment.trim()
+
+    })
+    .eq("id",id)
+    .select()
+    .single();
+
+
+    if(error){
+
+        showError(
+            error.message
+        );
+
+        return;
+    }
+
+
+    sales =
+        sales.map(
+            s =>
+            s.id===id
+            ? data
+            : s
+        );
+
 
     displaySales();
 
@@ -2204,10 +2723,10 @@ function editSale(id){
 
 
 /* =====================================================
-   DELETE SALE + RESTORE STOCK
+   DELETE SALE
 ===================================================== */
 
-function deleteSale(id){
+async function deleteSale(id){
 
     const sale =
         sales.find(
@@ -2225,70 +2744,173 @@ function deleteSale(id){
     )return;
 
 
-    if(sale.type==="Unit"){
+    /*
+     * UNIT
+     */
 
-        const alreadyExists =
-            units.some(
-                u => u.imei===sale.imei
-            );
+    if(sale.item_type==="Unit"){
+
+        const {
+            data:existingUnit
+        } =
+        await db
+        .from("units")
+        .select("id")
+        .eq("imei",sale.imei)
+        .maybeSingle();
 
 
-        if(!alreadyExists){
+        if(!existingUnit){
 
-            units.push({
+            const {
+                error:restoreError
+            } =
+            await db
+            .from("units")
+            .insert({
 
-                ...sale.originalItem
+                id:sale.unit_id,
+
+                name:sale.item_name,
+
+                brand:sale.brand,
+
+                model:sale.model,
+
+                color:sale.color,
+
+                imei:sale.imei,
+
+                price:sale.selling_price,
+
+                added_by:currentUser.id
 
             });
 
+
+            if(restoreError){
+
+                showError(
+                    restoreError.message
+                );
+
+                return;
+            }
         }
-
-    }else{
-
-        const accessory =
-            accessories.find(
-                a => a.id===sale.itemId
-            );
-
-
-        if(accessory){
-
-            accessory.stock +=
-                sale.quantity;
-
-        }else{
-
-            accessories.push({
-
-                ...sale.originalItem,
-
-                stock:
-                    Number(
-                        sale.originalItem.stock
-                    )
-
-            });
-
-        }
-
     }
 
 
-    sales =
-        sales.filter(
-            s => s.id!==id
+    /*
+     * ACCESSORY
+     */
+
+    else{
+
+        const {
+            data:item
+        } =
+        await db
+        .from("accessories")
+        .select("*")
+        .eq(
+            "id",
+            sale.accessory_id
+        )
+        .maybeSingle();
+
+
+        if(item){
+
+            const {
+                error
+            } =
+            await db
+            .from("accessories")
+            .update({
+
+                stock:
+                    Number(item.stock) +
+                    Number(sale.quantity)
+
+            })
+            .eq(
+                "id",
+                item.id
+            );
+
+
+            if(error){
+
+                showError(
+                    error.message
+                );
+
+                return;
+            }
+
+        }else{
+
+            const {
+                error
+            } =
+            await db
+            .from("accessories")
+            .insert({
+
+                id:sale.accessory_id,
+
+                name:sale.item_name,
+
+                brand:sale.brand,
+
+                color:sale.color,
+
+                stock:sale.quantity,
+
+                price:sale.selling_price /
+                    sale.quantity,
+
+                added_by:currentUser.id
+
+            });
+
+
+            if(error){
+
+                showError(
+                    error.message
+                );
+
+                return;
+            }
+        }
+    }
+
+
+    /*
+     * Delete sale.
+     */
+
+    const {
+        error
+    } =
+    await db
+    .from("sales")
+    .delete()
+    .eq("id",id);
+
+
+    if(error){
+
+        showError(
+            error.message
         );
 
+        return;
+    }
 
-    saveData();
 
-    displayUnits();
-
-    displayAccessories();
-
-    displaySales();
-
-    updateDashboard();
+    await loadAllData();
 }
 
 
@@ -2298,7 +2920,9 @@ function deleteSale(id){
 
 function printInventory(){
 
-    showSection("unitsSection");
+    showSection(
+        "unitsSection"
+    );
 
     window.print();
 }
@@ -2306,7 +2930,9 @@ function printInventory(){
 
 function printSales(){
 
-    showSection("soldSection");
+    showSection(
+        "soldSection"
+    );
 
     window.print();
 }
@@ -2325,7 +2951,8 @@ function downloadFile(
         new Blob(
             [content],
             {
-                type:"text/csv;charset=utf-8;"
+                type:
+                    "text/csv;charset=utf-8;"
             }
         );
 
@@ -2336,6 +2963,7 @@ function downloadFile(
 
     const a =
         document.createElement("a");
+
 
     a.href=url;
 
@@ -2366,6 +2994,7 @@ function downloadInventoryCSV(){
 
 
     rows.push([
+
         "Type",
         "Item",
         "Brand",
@@ -2376,6 +3005,7 @@ function downloadInventoryCSV(){
         "Price",
         "Added By",
         "Date & Time Added"
+
     ]);
 
 
@@ -2399,9 +3029,9 @@ function downloadInventoryCSV(){
 
             u.price,
 
-            u.addedBy,
+            u.added_by,
 
-            u.addedAt
+            u.added_at
 
         ]);
 
@@ -2428,9 +3058,9 @@ function downloadInventoryCSV(){
 
             a.price,
 
-            a.addedBy,
+            a.added_by,
 
-            a.addedAt
+            a.added_at
 
         ]);
 
@@ -2480,9 +3110,9 @@ function downloadSalesCSV(){
 
         rows.push([
 
-            sale.type,
+            sale.item_type,
 
-            sale.itemName,
+            sale.item_name,
 
             sale.brand,
 
@@ -2494,15 +3124,15 @@ function downloadSalesCSV(){
 
             sale.quantity,
 
-            sale.buyer,
+            sale.buyer_name,
 
-            sale.price,
+            sale.selling_price,
 
-            sale.payment,
+            sale.payment_method,
 
-            sale.soldBy,
+            sale.sold_by,
 
-            sale.soldAt
+            sale.sold_at
 
         ]);
 
@@ -2526,18 +3156,79 @@ function downloadSalesCSV(){
 
 
 /* =====================================================
-   START
+   AUTO LOGIN / SESSION
 ===================================================== */
 
-if(currentUser){
+async function startApp(){
 
-    openApp();
+    try{
 
-}else{
+        const {
+            data
+        } =
+        await db.auth.getSession();
 
-    showLogin();
 
+        if(data.session){
+
+            await loadCurrentUser();
+
+        }else{
+
+            showLogin();
+        }
+
+
+        /*
+         * Keep UI synchronized when
+         * Supabase session changes.
+         */
+
+        db.auth.onAuthStateChange(
+            async (event,session) => {
+
+                if(
+                    event==="SIGNED_IN" &&
+                    session
+                ){
+
+                    setTimeout(
+                        () =>
+                        loadCurrentUser(),
+                        0
+                    );
+
+                }
+
+
+                if(
+                    event==="SIGNED_OUT"
+                ){
+
+                    currentUser=null;
+
+                    currentProfile=null;
+
+                    showLogin();
+
+                }
+
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        showError(
+            "Unable to connect to Supabase.\n\n" +
+            error.message
+        );
+    }
 }
+
+
+startApp();
 
 </script>
 
