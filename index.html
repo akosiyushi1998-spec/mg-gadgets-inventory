@@ -13,87 +13,94 @@
 
 body {
     margin: 0;
-    background: #f2f4f7;
-    color: #222;
+    background: #f2f4f8;
+    color: #111827;
 }
 
 header {
     background: #111827;
     color: white;
-    padding: 18px;
+    padding: 20px;
     text-align: center;
 }
 
 header h1 {
     margin: 0;
-    font-size: 22px;
+    font-size: 23px;
 }
 
 .container {
-    max-width: 600px;
+    width: 100%;
+    max-width: 650px;
     margin: auto;
-    padding: 20px;
+    padding: 18px;
 }
 
 .card {
     background: white;
     padding: 20px;
-    border-radius: 14px;
+    border-radius: 15px;
     margin-bottom: 18px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 15px rgba(0,0,0,.08);
 }
 
-input, select, button {
+h2 {
+    margin-top: 0;
+}
+
+input {
     width: 100%;
-    padding: 13px;
-    margin-top: 9px;
-    margin-bottom: 10px;
+    padding: 14px;
+    margin: 7px 0;
+    border: 1px solid #d1d5db;
     border-radius: 9px;
-    border: 1px solid #ccc;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 button {
-    border: none;
+    width: 100%;
+    padding: 14px;
+    margin: 7px 0;
+    border: 0;
+    border-radius: 9px;
     background: #2563eb;
     color: white;
+    font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 
-button:hover {
-    opacity: .9;
+button:active {
+    transform: scale(.99);
 }
 
-.btn-danger {
-    background: #dc2626;
-}
-
-.btn-green {
+.green {
     background: #16a34a;
 }
 
-.btn-gray {
+.red {
+    background: #dc2626;
+}
+
+.gray {
     background: #6b7280;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-.center {
-    text-align: center;
+.user-box {
+    background: #e5e7eb;
+    padding: 13px;
+    border-radius: 9px;
+    margin-bottom: 12px;
 }
 
-.gadget {
-    border: 1px solid #ddd;
-    padding: 15px;
+.item {
+    border: 1px solid #d1d5db;
     border-radius: 12px;
+    padding: 15px;
     margin-top: 12px;
-}
-
-.gadget h3 {
-    margin-top: 0;
 }
 
 .badge {
@@ -103,28 +110,26 @@ button:hover {
     background: #16a34a;
     color: white;
     font-size: 12px;
+    font-weight: bold;
 }
 
-.sold {
+.badge-sold {
     background: #dc2626;
 }
 
-.top-user {
-    background: #e5e7eb;
-    padding: 10px;
-    border-radius: 9px;
-    margin-bottom: 15px;
+.message {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #dc2626;
+}
+
+.success {
+    color: #16a34a;
 }
 
 .small {
     font-size: 13px;
-    color: #666;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 18px 0;
+    color: #6b7280;
 }
 </style>
 </head>
@@ -139,85 +144,1038 @@ hr {
 
 <!-- LOGIN -->
 <div id="loginPage" class="card">
+
     <h2>Login</h2>
 
-    <input id="loginUsername" type="text" placeholder="Username">
-    <input id="loginPassword" type="password" placeholder="Password">
+    <input
+        id="loginUsername"
+        type="text"
+        placeholder="Username"
+        autocomplete="username"
+    >
+
+    <input
+        id="loginPassword"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+    >
 
     <button onclick="login()">LOGIN</button>
 
-    <button class="btn-gray" onclick="showRegister()">
+    <button id="registerButton" class="gray" onclick="showRegister()">
         CREATE ACCOUNT
     </button>
 
-    <p id="loginMessage" class="small"></p>
+    <div id="loginMessage" class="message"></div>
+
 </div>
 
 
 <!-- REGISTER -->
 <div id="registerPage" class="card hidden">
-    <h2>Register</h2>
 
-    <input id="registerUsername" type="text" placeholder="Username">
-    <input id="registerPassword" type="password" placeholder="Password">
-    <input id="registerConfirm" type="password" placeholder="Confirm Password">
+    <h2>Create Account</h2>
 
-    <button class="btn-green" onclick="register()">
-        CREATE ACCOUNT
+    <input
+        id="registerUsername"
+        type="text"
+        placeholder="Username"
+        autocomplete="username"
+    >
+
+    <input
+        id="registerPassword"
+        type="password"
+        placeholder="Password"
+        autocomplete="new-password"
+    >
+
+    <input
+        id="registerConfirm"
+        type="password"
+        placeholder="Confirm Password"
+        autocomplete="new-password"
+    >
+
+    <button class="green" onclick="register()">
+        REGISTER
     </button>
 
-    <button class="btn-gray" onclick="showLogin()">
+    <button class="gray" onclick="showLogin()">
         BACK TO LOGIN
     </button>
 
-    <p id="registerMessage" class="small"></p>
+    <div id="registerMessage" class="message"></div>
+
 </div>
 
 
-<!-- APP -->
+<!-- MAIN APP -->
 <div id="appPage" class="hidden">
 
-    <div class="top-user">
+    <div class="user-box">
         👤 Logged in as:
         <strong id="currentUser"></strong>
     </div>
 
-    <button class="btn-danger" onclick="logout()">
+    <button class="red" onclick="logout()">
         LOGOUT
     </button>
 
 
     <!-- ADD GADGET -->
     <div class="card">
+
         <h2>➕ Add Gadget</h2>
 
-        <input id="gadgetName" type="text" placeholder="Gadget Name">
+        <input
+            id="gadgetName"
+            type="text"
+            placeholder="Gadget name"
+        >
 
-        <input id="gadgetBrand" type="text" placeholder="Brand">
+        <input
+            id="gadgetBrand"
+            type="text"
+            placeholder="Brand"
+        >
 
-        <input id="gadgetPrice" type="number" placeholder="Price">
+        <input
+            id="gadgetPrice"
+            type="number"
+            placeholder="Price"
+        >
 
-        <input id="gadgetStock" type="number" placeholder="Quantity">
+        <input
+            id="gadgetStock"
+            type="number"
+            placeholder="Quantity"
+        >
 
-        <button class="btn-green" onclick="addGadget()">
+        <button class="green" onclick="addGadget()">
             ADD GADGET
         </button>
+
     </div>
 
 
     <!-- INVENTORY -->
     <div class="card">
+
         <h2>📦 Inventory</h2>
 
         <input
-            id="searchBox"
+            id="search"
             type="text"
             placeholder="Search gadget..."
             oninput="displayInventory()"
         >
 
         <div id="inventoryList"></div>
+
     </div>
 
 
-    <!-- SOLD
+    <!-- SOLD -->
+    <div class="card">
+
+        <h2>💰 Sold Items</h2>
+
+        <div id="salesList"></div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   STORAGE
+========================= */
+
+let users = load("mg_users", []);
+
+let inventory = load("mg_inventory", []);
+
+let sales = load("mg_sales", []);
+
+let currentUser =
+    localStorage.getItem("mg_current_user");
+
+
+function load(key, fallback) {
+
+    try {
+
+        const data = localStorage.getItem(key);
+
+        return data ? JSON.parse(data) : fallback;
+
+    } catch {
+
+        return fallback;
+    }
+}
+
+
+function save() {
+
+    localStorage.setItem(
+        "mg_users",
+        JSON.stringify(users)
+    );
+
+    localStorage.setItem(
+        "mg_inventory",
+        JSON.stringify(inventory)
+    );
+
+    localStorage.setItem(
+        "mg_sales",
+        JSON.stringify(sales)
+    );
+}
+
+
+/* =========================
+   ESCAPE TEXT
+========================= */
+
+function safe(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+function showLogin() {
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("appPage")
+        .classList.add("hidden");
+
+    updateRegisterButton();
+}
+
+
+function showRegister() {
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("appPage")
+        .classList.add("hidden");
+}
+
+
+function openApp() {
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("appPage")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("currentUser")
+        .textContent = currentUser;
+
+    displayInventory();
+
+    displaySales();
+}
+
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
+function updateRegisterButton() {
+
+    const button =
+        document.getElementById("registerButton");
+
+    if (users.length > 0) {
+
+        button.classList.add("hidden");
+
+    } else {
+
+        button.classList.remove("hidden");
+    }
+}
+
+
+/* =========================
+   REGISTER
+========================= */
+
+function register() {
+
+    const username =
+        document
+        .getElementById("registerUsername")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("registerPassword")
+        .value;
+
+    const confirm =
+        document
+        .getElementById("registerConfirm")
+        .value;
+
+    const message =
+        document.getElementById("registerMessage");
+
+
+    message.className = "message";
+
+
+    if (username.length < 3) {
+
+        message.textContent =
+            "Username must be at least 3 characters.";
+
+        return;
+    }
+
+
+    if (password.length < 6) {
+
+        message.textContent =
+            "Password must be at least 6 characters.";
+
+        return;
+    }
+
+
+    if (password !== confirm) {
+
+        message.textContent =
+            "Passwords do not match.";
+
+        return;
+    }
+
+
+    const exists =
+        users.some(
+            user =>
+                user.username.toLowerCase()
+                === username.toLowerCase()
+        );
+
+
+    if (exists) {
+
+        message.textContent =
+            "Username already exists.";
+
+        return;
+    }
+
+
+    /* CREATE USER */
+
+    const newUser = {
+
+        id: Date.now(),
+
+        username: username,
+
+        password: password
+
+    };
+
+
+    users.push(newUser);
+
+    save();
+
+
+    /* AUTOMATIC LOGIN */
+
+    currentUser = username;
+
+    localStorage.setItem(
+        "mg_current_user",
+        currentUser
+    );
+
+
+    message.className =
+        "message success";
+
+    message.textContent =
+        "Account created! Opening app...";
+
+
+    setTimeout(function() {
+
+        openApp();
+
+    }, 500);
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login() {
+
+    const username =
+        document
+        .getElementById("loginUsername")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    const user =
+        users.find(
+            item =>
+                item.username === username &&
+                item.password === password
+        );
+
+
+    if (!user) {
+
+        message.textContent =
+            "Incorrect username or password.";
+
+        return;
+    }
+
+
+    currentUser = user.username;
+
+    localStorage.setItem(
+        "mg_current_user",
+        currentUser
+    );
+
+
+    document
+        .getElementById("loginUsername")
+        .value = "";
+
+    document
+        .getElementById("loginPassword")
+        .value = "";
+
+
+    message.textContent = "";
+
+    openApp();
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    currentUser = null;
+
+    localStorage.removeItem(
+        "mg_current_user"
+    );
+
+
+    showLogin();
+}
+
+
+/* =========================
+   ADD GADGET
+========================= */
+
+function addGadget() {
+
+    const name =
+        document
+        .getElementById("gadgetName")
+        .value
+        .trim();
+
+    const brand =
+        document
+        .getElementById("gadgetBrand")
+        .value
+        .trim();
+
+    const price =
+        Number(
+            document
+            .getElementById("gadgetPrice")
+            .value
+        );
+
+    const stock =
+        Number(
+            document
+            .getElementById("gadgetStock")
+            .value
+        );
+
+
+    if (
+        !name ||
+        !brand ||
+        price <= 0 ||
+        stock <= 0
+    ) {
+
+        alert(
+            "Please complete all gadget information."
+        );
+
+        return;
+    }
+
+
+    inventory.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        brand: brand,
+
+        price: price,
+
+        stock: stock
+
+    });
+
+
+    save();
+
+
+    document
+        .getElementById("gadgetName")
+        .value = "";
+
+    document
+        .getElementById("gadgetBrand")
+        .value = "";
+
+    document
+        .getElementById("gadgetPrice")
+        .value = "";
+
+    document
+        .getElementById("gadgetStock")
+        .value = "";
+
+
+    displayInventory();
+}
+
+
+/* =========================
+   INVENTORY
+========================= */
+
+function displayInventory() {
+
+    const list =
+        document.getElementById("inventoryList");
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+
+    list.innerHTML = "";
+
+
+    const items =
+        inventory.filter(item =>
+
+            item.name
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            item.brand
+                .toLowerCase()
+                .includes(search)
+
+        );
+
+
+    if (items.length === 0) {
+
+        list.innerHTML =
+            "<p class='small'>No gadgets found.</p>";
+
+        return;
+    }
+
+
+    items.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "item";
+
+
+        div.innerHTML = `
+
+            <h3>${safe(item.name)}</h3>
+
+            <p>
+                <strong>Brand:</strong>
+                ${safe(item.brand)}
+            </p>
+
+            <p>
+                <strong>Price:</strong>
+                ₱${Number(item.price).toLocaleString()}
+            </p>
+
+            <p>
+                <strong>Stock:</strong>
+                ${item.stock}
+            </p>
+
+            <span class="badge">
+                AVAILABLE
+            </span>
+
+            <button
+                class="green"
+                onclick="sellItem(${item.id})"
+            >
+                SELL
+            </button>
+
+            <button
+                class="gray"
+                onclick="editGadget(${item.id})"
+            >
+                EDIT
+            </button>
+
+            <button
+                class="red"
+                onclick="deleteGadget(${item.id})"
+            >
+                DELETE
+            </button>
+        `;
+
+
+        list.appendChild(div);
+    });
+}
+
+
+/* =========================
+   SELL
+========================= */
+
+function sellItem(id) {
+
+    const item =
+        inventory.find(
+            gadget => gadget.id === id
+        );
+
+
+    if (!item) return;
+
+
+    if (item.stock <= 0) {
+
+        alert("Out of stock.");
+
+        return;
+    }
+
+
+    const customer =
+        prompt("Customer name (optional):");
+
+
+    item.stock--;
+
+
+    sales.push({
+
+        id: Date.now(),
+
+        name: item.name,
+
+        brand: item.brand,
+
+        price: item.price,
+
+        customer:
+            customer || "N/A",
+
+        soldBy: currentUser,
+
+        date:
+            new Date().toLocaleString()
+
+    });
+
+
+    save();
+
+    displayInventory();
+
+    displaySales();
+}
+
+
+/* =========================
+   SALES
+========================= */
+
+function displaySales() {
+
+    const list =
+        document.getElementById("salesList");
+
+    list.innerHTML = "";
+
+
+    if (sales.length === 0) {
+
+        list.innerHTML =
+            "<p class='small'>No sold items yet.</p>";
+
+        return;
+    }
+
+
+    [...sales]
+        .reverse()
+        .forEach(sale => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "item";
+
+
+            div.innerHTML = `
+
+                <h3>${safe(sale.name)}</h3>
+
+                <p>
+                    <strong>Brand:</strong>
+                    ${safe(sale.brand)}
+                </p>
+
+                <p>
+                    <strong>Price:</strong>
+                    ₱${Number(sale.price).toLocaleString()}
+                </p>
+
+                <p>
+                    <strong>Customer:</strong>
+                    ${safe(sale.customer)}
+                </p>
+
+                <p>
+                    <strong>Sold By:</strong>
+                    ${safe(sale.soldBy)}
+                </p>
+
+                <p class="small">
+                    ${safe(sale.date)}
+                </p>
+
+                <span class="badge badge-sold">
+                    SOLD
+                </span>
+
+                <button
+                    onclick="editSale(${sale.id})"
+                >
+                    EDIT SOLD ITEM
+                </button>
+
+                <button
+                    class="red"
+                    onclick="deleteSale(${sale.id})"
+                >
+                    DELETE SALE
+                </button>
+
+            `;
+
+
+            list.appendChild(div);
+
+        });
+}
+
+
+/* =========================
+   EDIT INVENTORY
+========================= */
+
+function editGadget(id) {
+
+    const item =
+        inventory.find(
+            gadget => gadget.id === id
+        );
+
+
+    if (!item) return;
+
+
+    const name =
+        prompt(
+            "Gadget name:",
+            item.name
+        );
+
+    if (name === null) return;
+
+
+    const brand =
+        prompt(
+            "Brand:",
+            item.brand
+        );
+
+    if (brand === null) return;
+
+
+    const price =
+        prompt(
+            "Price:",
+            item.price
+        );
+
+    if (price === null) return;
+
+
+    const stock =
+        prompt(
+            "Stock:",
+            item.stock
+        );
+
+    if (stock === null) return;
+
+
+    item.name = name.trim();
+
+    item.brand = brand.trim();
+
+    item.price = Number(price);
+
+    item.stock = Number(stock);
+
+
+    save();
+
+    displayInventory();
+}
+
+
+/* =========================
+   DELETE INVENTORY
+========================= */
+
+function deleteGadget(id) {
+
+    if (
+        !confirm(
+            "Delete this gadget?"
+        )
+    ) return;
+
+
+    inventory =
+        inventory.filter(
+            item => item.id !== id
+        );
+
+
+    save();
+
+    displayInventory();
+}
+
+
+/* =========================
+   EDIT SOLD
+========================= */
+
+function editSale(id) {
+
+    const sale =
+        sales.find(
+            item => item.id === id
+        );
+
+
+    if (!sale) return;
+
+
+    const name =
+        prompt(
+            "Gadget name:",
+            sale.name
+        );
+
+    if (name === null) return;
+
+
+    const brand =
+        prompt(
+            "Brand:",
+            sale.brand
+        );
+
+    if (brand === null) return;
+
+
+    const price =
+        prompt(
+            "Selling price:",
+            sale.price
+        );
+
+    if (price === null) return;
+
+
+    const customer =
+        prompt(
+            "Customer name:",
+            sale.customer
+        );
+
+    if (customer === null) return;
+
+
+    const soldBy =
+        prompt(
+            "Sold By:",
+            sale.soldBy
+        );
+
+    if (soldBy === null) return;
+
+
+    sale.name = name.trim();
+
+    sale.brand = brand.trim();
+
+    sale.price = Number(price);
+
+    sale.customer =
+        customer.trim();
+
+    sale.soldBy =
+        soldBy.trim();
+
+
+    save();
+
+    displaySales();
+}
+
+
+/* =========================
+   DELETE SALE
+========================= */
+
+function deleteSale(id) {
+
+    if (
+        !confirm(
+            "Delete this sale record?"
+        )
+    ) return;
+
+
+    sales =
+        sales.filter(
+            item => item.id !== id
+        );
+
+
+    save();
+
+    displaySales();
+}
+
+
+/* =========================
+   START APP
+========================= */
+
+if (currentUser) {
+
+    openApp();
+
+} else {
+
+    showLogin();
+
+}
+
+</script>
+
+</body>
+</html>    
