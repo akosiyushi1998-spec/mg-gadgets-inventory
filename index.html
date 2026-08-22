@@ -6,130 +6,223 @@
 <title>MG Gadgets Inventory</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+
+body{
+    margin:0;
+    background:#f1f5f9;
+    color:#111827;
 }
 
-body {
-    margin: 0;
-    background: #f2f4f8;
-    color: #111827;
+header{
+    background:#111827;
+    color:white;
+    padding:20px 15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
-header {
-    background: #111827;
-    color: white;
-    padding: 20px;
-    text-align: center;
+header h1{
+    margin:0;
+    font-size:23px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 23px;
+.container{
+    max-width:750px;
+    margin:auto;
+    padding:15px;
 }
 
-.container {
-    width: 100%;
-    max-width: 650px;
-    margin: auto;
-    padding: 18px;
+.card{
+    background:white;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
 }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 15px rgba(0,0,0,.08);
+h2{
+    margin-top:0;
+    font-size:21px;
 }
 
-h2 {
-    margin-top: 0;
+h3{
+    margin:5px 0 12px;
 }
 
-input {
-    width: 100%;
-    padding: 14px;
-    margin: 7px 0;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    font-size: 16px;
+input,select{
+    width:100%;
+    padding:13px;
+    margin:6px 0;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    font-size:16px;
+    background:white;
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    margin: 7px 0;
-    border: 0;
-    border-radius: 9px;
-    background: #2563eb;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+button{
+    width:100%;
+    padding:13px;
+    margin:6px 0;
+    border:0;
+    border-radius:9px;
+    background:#2563eb;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
 }
 
-button:active {
-    transform: scale(.99);
+button:active{
+    transform:scale(.99);
 }
 
-.green {
-    background: #16a34a;
+.green{background:#16a34a}
+.red{background:#dc2626}
+.gray{background:#64748b}
+.orange{background:#ea580c}
+.dark{background:#111827}
+
+.hidden{display:none!important}
+
+.userbox{
+    background:#dbeafe;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:12px;
 }
 
-.red {
-    background: #dc2626;
+.tabs{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    margin-bottom:15px;
 }
 
-.gray {
-    background: #6b7280;
+.tabs button{
+    min-width:120px;
+    margin:0;
+    white-space:nowrap;
 }
 
-.hidden {
-    display: none !important;
+.item{
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    padding:15px;
+    margin-top:12px;
+    background:#fff;
 }
 
-.user-box {
-    background: #e5e7eb;
-    padding: 13px;
-    border-radius: 9px;
-    margin-bottom: 12px;
+.item p{
+    margin:7px 0;
 }
 
-.item {
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    padding: 15px;
-    margin-top: 12px;
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#16a34a;
+    color:white;
+    font-size:12px;
+    font-weight:bold;
 }
 
-.badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 20px;
-    background: #16a34a;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
+.soldbadge{
+    background:#dc2626;
 }
 
-.badge-sold {
-    background: #dc2626;
+.accessorybadge{
+    background:#7c3aed;
 }
 
-.message {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #dc2626;
+.small{
+    color:#64748b;
+    font-size:13px;
 }
 
-.success {
-    color: #16a34a;
+.success{
+    color:#16a34a;
 }
 
-.small {
-    font-size: 13px;
-    color: #6b7280;
+.error{
+    color:#dc2626;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+    border:1px solid #e2e8f0;
+}
+
+.stat strong{
+    display:block;
+    font-size:24px;
+    margin-top:5px;
+}
+
+.report-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+@media(max-width:500px){
+    .report-buttons{
+        grid-template-columns:1fr;
+    }
+}
+
+hr{
+    border:0;
+    border-top:1px solid #e2e8f0;
+    margin:18px 0;
+}
+
+@media print{
+    header,
+    .no-print,
+    button,
+    .tabs,
+    #loginPage,
+    #registerPage,
+    .stats{
+        display:none!important;
+    }
+
+    body{
+        background:white;
+    }
+
+    .card{
+        box-shadow:none;
+        border:0;
+    }
+
+    .item{
+        break-inside:avoid;
+    }
+
+    #appPage{
+        display:block!important;
+    }
+
+    .print-title{
+        display:block!important;
+    }
+}
+
+.print-title{
+    display:none;
 }
 </style>
 </head>
@@ -142,10 +235,11 @@ button:active {
 
 <div class="container">
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
+
 <div id="loginPage" class="card">
 
-    <h2>Login</h2>
+    <h2>🔐 Login</h2>
 
     <input
         id="loginUsername"
@@ -163,19 +257,22 @@ button:active {
 
     <button onclick="login()">LOGIN</button>
 
-    <button id="registerButton" class="gray" onclick="showRegister()">
+    <button id="createAccountBtn"
+            class="gray"
+            onclick="showRegister()">
         CREATE ACCOUNT
     </button>
 
-    <div id="loginMessage" class="message"></div>
+    <p id="loginMessage"></p>
 
 </div>
 
 
-<!-- REGISTER -->
+<!-- ================= REGISTER ================= -->
+
 <div id="registerPage" class="card hidden">
 
-    <h2>Create Account</h2>
+    <h2>📝 Create Account</h2>
 
     <input
         id="registerUsername"
@@ -206,83 +303,257 @@ button:active {
         BACK TO LOGIN
     </button>
 
-    <div id="registerMessage" class="message"></div>
+    <p id="registerMessage"></p>
 
 </div>
 
 
-<!-- MAIN APP -->
+<!-- ================= APP ================= -->
+
 <div id="appPage" class="hidden">
 
-    <div class="user-box">
+    <div class="userbox">
         👤 Logged in as:
         <strong id="currentUser"></strong>
     </div>
 
-    <button class="red" onclick="logout()">
+    <button class="red no-print" onclick="logout()">
         LOGOUT
     </button>
 
 
-    <!-- ADD GADGET -->
+    <!-- DASHBOARD -->
+
     <div class="card">
 
-        <h2>➕ Add Gadget</h2>
+        <h2>📊 Dashboard</h2>
 
-        <input
-            id="gadgetName"
-            type="text"
-            placeholder="Gadget name"
-        >
+        <div class="stats">
 
-        <input
-            id="gadgetBrand"
-            type="text"
-            placeholder="Brand"
-        >
+            <div class="stat">
+                📱 Units
+                <strong id="unitCount">0</strong>
+            </div>
 
-        <input
-            id="gadgetPrice"
-            type="number"
-            placeholder="Price"
-        >
+            <div class="stat">
+                🎧 Accessories
+                <strong id="accessoryCount">0</strong>
+            </div>
 
-        <input
-            id="gadgetStock"
-            type="number"
-            placeholder="Quantity"
-        >
+            <div class="stat">
+                💰 Sold Items
+                <strong id="soldCount">0</strong>
+            </div>
 
-        <button class="green" onclick="addGadget()">
-            ADD GADGET
+            <div class="stat">
+                💵 Sales
+                <strong id="salesTotal">₱0</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TABS -->
+
+    <div class="tabs no-print">
+
+        <button onclick="showSection('unitsSection')">
+            📱 UNITS
+        </button>
+
+        <button onclick="showSection('accessoriesSection')">
+            🎧 ACCESSORIES
+        </button>
+
+        <button onclick="showSection('soldSection')">
+            💰 SOLD ITEMS
+        </button>
+
+        <button onclick="showSection('reportsSection')">
+            📊 REPORTS
         </button>
 
     </div>
 
 
-    <!-- INVENTORY -->
-    <div class="card">
+    <!-- ================= UNITS ================= -->
 
-        <h2>📦 Inventory</h2>
+    <div id="unitsSection" class="card">
+
+        <h2>📱 Units</h2>
+
+        <h3>➕ Add New Unit</h3>
 
         <input
-            id="search"
+            id="unitName"
             type="text"
-            placeholder="Search gadget..."
-            oninput="displayInventory()"
+            placeholder="Unit / Gadget Name"
         >
 
-        <div id="inventoryList"></div>
+        <input
+            id="unitBrand"
+            type="text"
+            placeholder="Brand"
+        >
+
+        <input
+            id="unitModel"
+            type="text"
+            placeholder="Model"
+        >
+
+        <input
+            id="unitColor"
+            type="text"
+            placeholder="Color"
+        >
+
+        <input
+            id="unitIMEI"
+            type="text"
+            placeholder="IMEI"
+        >
+
+        <input
+            id="unitPrice"
+            type="number"
+            placeholder="Price"
+        >
+
+        <button class="green" onclick="addUnit()">
+            ADD UNIT
+        </button>
+
+        <hr>
+
+        <input
+            id="unitSearch"
+            type="text"
+            placeholder="🔍 Search units..."
+            oninput="displayUnits()"
+        >
+
+        <div id="unitsList"></div>
 
     </div>
 
 
-    <!-- SOLD -->
-    <div class="card">
+    <!-- ================= ACCESSORIES ================= -->
+
+    <div id="accessoriesSection" class="card hidden">
+
+        <h2>🎧 Accessories</h2>
+
+        <h3>➕ Add New Accessory</h3>
+
+        <input
+            id="accessoryName"
+            type="text"
+            placeholder="Accessory Name"
+        >
+
+        <input
+            id="accessoryBrand"
+            type="text"
+            placeholder="Brand"
+        >
+
+        <input
+            id="accessoryColor"
+            type="text"
+            placeholder="Color"
+        >
+
+        <input
+            id="accessoryStock"
+            type="number"
+            placeholder="Quantity / Stock"
+        >
+
+        <input
+            id="accessoryPrice"
+            type="number"
+            placeholder="Price"
+        >
+
+        <button class="green" onclick="addAccessory()">
+            ADD ACCESSORY
+        </button>
+
+        <hr>
+
+        <input
+            id="accessorySearch"
+            type="text"
+            placeholder="🔍 Search accessories..."
+            oninput="displayAccessories()"
+        >
+
+        <div id="accessoriesList"></div>
+
+    </div>
+
+
+    <!-- ================= SOLD ================= -->
+
+    <div id="soldSection" class="card hidden">
 
         <h2>💰 Sold Items</h2>
 
+        <p class="small">
+            Units and accessories are combined here.
+        </p>
+
+        <input
+            id="soldSearch"
+            type="text"
+            placeholder="🔍 Search sold items..."
+            oninput="displaySales()"
+        >
+
         <div id="salesList"></div>
+
+    </div>
+
+
+    <!-- ================= REPORTS ================= -->
+
+    <div id="reportsSection" class="card hidden">
+
+        <h2>📊 Reports</h2>
+
+        <p>
+            Generate or save your inventory and sales records.
+        </p>
+
+        <div class="report-buttons">
+
+            <button onclick="printInventory()">
+                🖨️ PRINT INVENTORY
+            </button>
+
+            <button onclick="printSales()">
+                🖨️ PRINT SALES
+            </button>
+
+            <button class="green" onclick="downloadInventoryCSV()">
+                📥 INVENTORY CSV
+            </button>
+
+            <button class="green" onclick="downloadSalesCSV()">
+                📥 SALES CSV
+            </button>
+
+        </div>
+
+        <hr>
+
+        <p class="small">
+            Tip: Sa Print screen ng phone, piliin ang
+            <strong>Save as PDF</strong> kung gusto mong gawing PDF.
+        </p>
 
     </div>
 
@@ -293,36 +564,41 @@ button:active {
 
 <script>
 
-/* =========================
-   STORAGE
-========================= */
+/* =====================================================
+   DATA
+===================================================== */
 
-let users = load("mg_users", []);
+let users = loadData("mg_users", []);
 
-let inventory = load("mg_inventory", []);
+let units = loadData("mg_units", []);
 
-let sales = load("mg_sales", []);
+let accessories = loadData("mg_accessories", []);
+
+let sales = loadData("mg_sales", []);
 
 let currentUser =
     localStorage.getItem("mg_current_user");
 
 
-function load(key, fallback) {
+function loadData(key, fallback){
 
-    try {
+    try{
 
-        const data = localStorage.getItem(key);
+        const value =
+            localStorage.getItem(key);
 
-        return data ? JSON.parse(data) : fallback;
+        return value
+            ? JSON.parse(value)
+            : fallback;
 
-    } catch {
+    }catch(e){
 
         return fallback;
     }
 }
 
 
-function save() {
+function saveData(){
 
     localStorage.setItem(
         "mg_users",
@@ -330,8 +606,13 @@ function save() {
     );
 
     localStorage.setItem(
-        "mg_inventory",
-        JSON.stringify(inventory)
+        "mg_units",
+        JSON.stringify(units)
+    );
+
+    localStorage.setItem(
+        "mg_accessories",
+        JSON.stringify(accessories)
     );
 
     localStorage.setItem(
@@ -341,26 +622,84 @@ function save() {
 }
 
 
-/* =========================
-   ESCAPE TEXT
-========================= */
+/* =====================================================
+   HELPERS
+===================================================== */
 
-function safe(text) {
+function safe(value){
 
-    return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 }
 
 
-/* =========================
-   PAGE
-========================= */
+function money(value){
 
-function showLogin() {
+    return "₱" +
+        Number(value || 0)
+        .toLocaleString("en-PH",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+}
+
+
+function now(){
+
+    return new Date().toLocaleString(
+        "en-PH",
+        {
+            dateStyle:"long",
+            timeStyle:"short"
+        }
+    );
+}
+
+
+function paymentMethod(){
+
+    const choice =
+        prompt(
+`MODE OF PAYMENT
+
+1 - Cash
+2 - GCash
+3 - Maya
+4 - Debit Card
+5 - Credit Card
+6 - Bank Transfer
+7 - Installment
+8 - Other
+
+Enter number:`
+        );
+
+    const methods = {
+
+        "1":"Cash",
+        "2":"GCash",
+        "3":"Maya",
+        "4":"Debit Card",
+        "5":"Credit Card",
+        "6":"Bank Transfer",
+        "7":"Installment",
+        "8":"Other"
+
+    };
+
+    return methods[choice] || null;
+}
+
+
+/* =====================================================
+   LOGIN / REGISTER
+===================================================== */
+
+function showLogin(){
 
     document
         .getElementById("loginPage")
@@ -378,7 +717,7 @@ function showLogin() {
 }
 
 
-function showRegister() {
+function showRegister(){
 
     document
         .getElementById("loginPage")
@@ -394,55 +733,25 @@ function showRegister() {
 }
 
 
-function openApp() {
+function updateRegisterButton(){
 
-    document
-        .getElementById("loginPage")
-        .classList.add("hidden");
+    const btn =
+        document.getElementById(
+            "createAccountBtn"
+        );
 
-    document
-        .getElementById("registerPage")
-        .classList.add("hidden");
+    if(users.length > 0){
 
-    document
-        .getElementById("appPage")
-        .classList.remove("hidden");
+        btn.classList.add("hidden");
 
-    document
-        .getElementById("currentUser")
-        .textContent = currentUser;
+    }else{
 
-    displayInventory();
-
-    displaySales();
-}
-
-
-/* =========================
-   REGISTER BUTTON
-========================= */
-
-function updateRegisterButton() {
-
-    const button =
-        document.getElementById("registerButton");
-
-    if (users.length > 0) {
-
-        button.classList.add("hidden");
-
-    } else {
-
-        button.classList.remove("hidden");
+        btn.classList.remove("hidden");
     }
 }
 
 
-/* =========================
-   REGISTER
-========================= */
-
-function register() {
+function register(){
 
     const username =
         document
@@ -461,13 +770,14 @@ function register() {
         .value;
 
     const message =
-        document.getElementById("registerMessage");
+        document.getElementById(
+            "registerMessage"
+        );
 
 
-    message.className = "message";
+    if(username.length < 3){
 
-
-    if (username.length < 3) {
+        message.className="error";
 
         message.textContent =
             "Username must be at least 3 characters.";
@@ -476,7 +786,9 @@ function register() {
     }
 
 
-    if (password.length < 6) {
+    if(password.length < 6){
+
+        message.className="error";
 
         message.textContent =
             "Password must be at least 6 characters.";
@@ -485,7 +797,9 @@ function register() {
     }
 
 
-    if (password !== confirm) {
+    if(password !== confirm){
+
+        message.className="error";
 
         message.textContent =
             "Passwords do not match.";
@@ -496,13 +810,15 @@ function register() {
 
     const exists =
         users.some(
-            user =>
-                user.username.toLowerCase()
-                === username.toLowerCase()
+            u =>
+            u.username.toLowerCase()
+            === username.toLowerCase()
         );
 
 
-    if (exists) {
+    if(exists){
+
+        message.className="error";
 
         message.textContent =
             "Username already exists.";
@@ -511,25 +827,19 @@ function register() {
     }
 
 
-    /* CREATE USER */
+    users.push({
 
-    const newUser = {
+        id:Date.now(),
 
-        id: Date.now(),
+        username:username,
 
-        username: username,
+        password:password
 
-        password: password
-
-    };
+    });
 
 
-    users.push(newUser);
+    saveData();
 
-    save();
-
-
-    /* AUTOMATIC LOGIN */
 
     currentUser = username;
 
@@ -539,26 +849,11 @@ function register() {
     );
 
 
-    message.className =
-        "message success";
-
-    message.textContent =
-        "Account created! Opening app...";
-
-
-    setTimeout(function() {
-
-        openApp();
-
-    }, 500);
+    openApp();
 }
 
 
-/* =========================
-   LOGIN
-========================= */
-
-function login() {
+function login(){
 
     const username =
         document
@@ -571,19 +866,24 @@ function login() {
         .getElementById("loginPassword")
         .value;
 
-    const message =
-        document.getElementById("loginMessage");
-
 
     const user =
         users.find(
-            item =>
-                item.username === username &&
-                item.password === password
+            u =>
+            u.username === username &&
+            u.password === password
         );
 
 
-    if (!user) {
+    const message =
+        document.getElementById(
+            "loginMessage"
+        );
+
+
+    if(!user){
+
+        message.className="error";
 
         message.textContent =
             "Incorrect username or password.";
@@ -592,7 +892,9 @@ function login() {
     }
 
 
-    currentUser = user.username;
+    currentUser =
+        user.username;
+
 
     localStorage.setItem(
         "mg_current_user",
@@ -600,26 +902,11 @@ function login() {
     );
 
 
-    document
-        .getElementById("loginUsername")
-        .value = "";
-
-    document
-        .getElementById("loginPassword")
-        .value = "";
-
-
-    message.textContent = "";
-
     openApp();
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
-
-function logout() {
+function logout(){
 
     currentUser = null;
 
@@ -627,167 +914,333 @@ function logout() {
         "mg_current_user"
     );
 
-
     showLogin();
 }
 
 
-/* =========================
-   ADD GADGET
-========================= */
+/* =====================================================
+   APP
+===================================================== */
 
-function addGadget() {
+function openApp(){
 
-    const name =
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("appPage")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("currentUser")
+        .textContent =
+        currentUser;
+
+
+    displayUnits();
+
+    displayAccessories();
+
+    displaySales();
+
+    updateDashboard();
+}
+
+
+function showSection(id){
+
+    const sections = [
+
+        "unitsSection",
+        "accessoriesSection",
+        "soldSection",
+        "reportsSection"
+
+    ];
+
+
+    sections.forEach(section => {
+
         document
-        .getElementById("gadgetName")
-        .value
-        .trim();
-
-    const brand =
-        document
-        .getElementById("gadgetBrand")
-        .value
-        .trim();
-
-    const price =
-        Number(
-            document
-            .getElementById("gadgetPrice")
-            .value
-        );
-
-    const stock =
-        Number(
-            document
-            .getElementById("gadgetStock")
-            .value
-        );
-
-
-    if (
-        !name ||
-        !brand ||
-        price <= 0 ||
-        stock <= 0
-    ) {
-
-        alert(
-            "Please complete all gadget information."
-        );
-
-        return;
-    }
-
-
-    inventory.push({
-
-        id: Date.now(),
-
-        name: name,
-
-        brand: brand,
-
-        price: price,
-
-        stock: stock
+            .getElementById(section)
+            .classList.add("hidden");
 
     });
 
 
-    save();
-
-
     document
-        .getElementById("gadgetName")
-        .value = "";
-
-    document
-        .getElementById("gadgetBrand")
-        .value = "";
-
-    document
-        .getElementById("gadgetPrice")
-        .value = "";
-
-    document
-        .getElementById("gadgetStock")
-        .value = "";
-
-
-    displayInventory();
+        .getElementById(id)
+        .classList.remove("hidden");
 }
 
 
-/* =========================
-   INVENTORY
-========================= */
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
-function displayInventory() {
+function updateDashboard(){
 
-    const list =
-        document.getElementById("inventoryList");
-
-    const search =
-        document
-        .getElementById("search")
-        .value
-        .toLowerCase();
+    document
+        .getElementById("unitCount")
+        .textContent =
+        units.length;
 
 
-    list.innerHTML = "";
-
-
-    const items =
-        inventory.filter(item =>
-
-            item.name
-                .toLowerCase()
-                .includes(search)
-
-            ||
-
-            item.brand
-                .toLowerCase()
-                .includes(search)
-
+    const accessoryTotal =
+        accessories.reduce(
+            (total,item) =>
+                total + Number(item.stock || 0),
+            0
         );
 
 
-    if (items.length === 0) {
+    document
+        .getElementById("accessoryCount")
+        .textContent =
+        accessoryTotal;
 
-        list.innerHTML =
-            "<p class='small'>No gadgets found.</p>";
+
+    document
+        .getElementById("soldCount")
+        .textContent =
+        sales.length;
+
+
+    const total =
+        sales.reduce(
+            (sum,sale) =>
+                sum +
+                Number(sale.price || 0),
+            0
+        );
+
+
+    document
+        .getElementById("salesTotal")
+        .textContent =
+        money(total);
+}
+
+
+/* =====================================================
+   UNITS
+===================================================== */
+
+function addUnit(){
+
+    const name =
+        document.getElementById(
+            "unitName"
+        ).value.trim();
+
+    const brand =
+        document.getElementById(
+            "unitBrand"
+        ).value.trim();
+
+    const model =
+        document.getElementById(
+            "unitModel"
+        ).value.trim();
+
+    const color =
+        document.getElementById(
+            "unitColor"
+        ).value.trim();
+
+    const imei =
+        document.getElementById(
+            "unitIMEI"
+        ).value.trim();
+
+    const price =
+        Number(
+            document.getElementById(
+                "unitPrice"
+            ).value
+        );
+
+
+    if(
+        !name ||
+        !brand ||
+        !model ||
+        !color ||
+        !imei ||
+        price <= 0
+    ){
+
+        alert(
+            "Please complete all Unit information."
+        );
 
         return;
     }
 
 
-    items.forEach(item => {
+    if(
+        units.some(
+            u => u.imei === imei
+        )
+    ){
+
+        alert(
+            "This IMEI already exists."
+        );
+
+        return;
+    }
+
+
+    units.push({
+
+        id:Date.now(),
+
+        type:"Unit",
+
+        name:name,
+
+        brand:brand,
+
+        model:model,
+
+        color:color,
+
+        imei:imei,
+
+        price:price,
+
+        addedBy:currentUser,
+
+        addedAt:now()
+
+    });
+
+
+    saveData();
+
+
+    clearUnitForm();
+
+    displayUnits();
+
+    updateDashboard();
+}
+
+
+function clearUnitForm(){
+
+    [
+        "unitName",
+        "unitBrand",
+        "unitModel",
+        "unitColor",
+        "unitIMEI",
+        "unitPrice"
+
+    ].forEach(id => {
+
+        document.getElementById(id).value="";
+
+    });
+}
+
+
+function displayUnits(){
+
+    const list =
+        document.getElementById(
+            "unitsList"
+        );
+
+    const search =
+        document.getElementById(
+            "unitSearch"
+        ).value.toLowerCase();
+
+
+    list.innerHTML="";
+
+
+    const filtered =
+        units.filter(
+            u =>
+            (
+                u.name +
+                " " +
+                u.brand +
+                " " +
+                u.model +
+                " " +
+                u.color +
+                " " +
+                u.imei
+            )
+            .toLowerCase()
+            .includes(search)
+        );
+
+
+    if(filtered.length===0){
+
+        list.innerHTML =
+            "<p class='small'>No units found.</p>";
+
+        return;
+    }
+
+
+    filtered.forEach(unit => {
 
         const div =
             document.createElement("div");
 
-        div.className = "item";
+        div.className="item";
 
 
-        div.innerHTML = `
+        div.innerHTML=`
 
-            <h3>${safe(item.name)}</h3>
+            <h3>📱 ${safe(unit.name)}</h3>
 
             <p>
                 <strong>Brand:</strong>
-                ${safe(item.brand)}
+                ${safe(unit.brand)}
+            </p>
+
+            <p>
+                <strong>Model:</strong>
+                ${safe(unit.model)}
+            </p>
+
+            <p>
+                <strong>Color:</strong>
+                ${safe(unit.color)}
+            </p>
+
+            <p>
+                <strong>IMEI:</strong>
+                ${safe(unit.imei)}
             </p>
 
             <p>
                 <strong>Price:</strong>
-                ₱${Number(item.price).toLocaleString()}
+                ${money(unit.price)}
             </p>
 
             <p>
-                <strong>Stock:</strong>
-                ${item.stock}
+                <strong>Added By:</strong>
+                ${safe(unit.addedBy)}
+            </p>
+
+            <p class="small">
+                📅 Added:
+                ${safe(unit.addedAt)}
             </p>
 
             <span class="badge">
@@ -796,198 +1249,377 @@ function displayInventory() {
 
             <button
                 class="green"
-                onclick="sellItem(${item.id})"
-            >
-                SELL
+                onclick="sellUnit(${unit.id})">
+                SELL UNIT
             </button>
 
             <button
                 class="gray"
-                onclick="editGadget(${item.id})"
-            >
+                onclick="editUnit(${unit.id})">
                 EDIT
             </button>
 
             <button
                 class="red"
-                onclick="deleteGadget(${item.id})"
-            >
+                onclick="deleteUnit(${unit.id})">
                 DELETE
             </button>
+
         `;
 
 
         list.appendChild(div);
+
     });
 }
 
 
-/* =========================
-   SELL
-========================= */
+/* =====================================================
+   EDIT UNIT
+===================================================== */
 
-function sellItem(id) {
+function editUnit(id){
 
-    const item =
-        inventory.find(
-            gadget => gadget.id === id
+    const unit =
+        units.find(
+            u => u.id===id
         );
 
 
-    if (!item) return;
-
-
-    if (item.stock <= 0) {
-
-        alert("Out of stock.");
-
-        return;
-    }
-
-
-    const customer =
-        prompt("Customer name (optional):");
-
-
-    item.stock--;
-
-
-    sales.push({
-
-        id: Date.now(),
-
-        name: item.name,
-
-        brand: item.brand,
-
-        price: item.price,
-
-        customer:
-            customer || "N/A",
-
-        soldBy: currentUser,
-
-        date:
-            new Date().toLocaleString()
-
-    });
-
-
-    save();
-
-    displayInventory();
-
-    displaySales();
-}
-
-
-/* =========================
-   SALES
-========================= */
-
-function displaySales() {
-
-    const list =
-        document.getElementById("salesList");
-
-    list.innerHTML = "";
-
-
-    if (sales.length === 0) {
-
-        list.innerHTML =
-            "<p class='small'>No sold items yet.</p>";
-
-        return;
-    }
-
-
-    [...sales]
-        .reverse()
-        .forEach(sale => {
-
-            const div =
-                document.createElement("div");
-
-            div.className = "item";
-
-
-            div.innerHTML = `
-
-                <h3>${safe(sale.name)}</h3>
-
-                <p>
-                    <strong>Brand:</strong>
-                    ${safe(sale.brand)}
-                </p>
-
-                <p>
-                    <strong>Price:</strong>
-                    ₱${Number(sale.price).toLocaleString()}
-                </p>
-
-                <p>
-                    <strong>Customer:</strong>
-                    ${safe(sale.customer)}
-                </p>
-
-                <p>
-                    <strong>Sold By:</strong>
-                    ${safe(sale.soldBy)}
-                </p>
-
-                <p class="small">
-                    ${safe(sale.date)}
-                </p>
-
-                <span class="badge badge-sold">
-                    SOLD
-                </span>
-
-                <button
-                    onclick="editSale(${sale.id})"
-                >
-                    EDIT SOLD ITEM
-                </button>
-
-                <button
-                    class="red"
-                    onclick="deleteSale(${sale.id})"
-                >
-                    DELETE SALE
-                </button>
-
-            `;
-
-
-            list.appendChild(div);
-
-        });
-}
-
-
-/* =========================
-   EDIT INVENTORY
-========================= */
-
-function editGadget(id) {
-
-    const item =
-        inventory.find(
-            gadget => gadget.id === id
-        );
-
-
-    if (!item) return;
+    if(!unit)return;
 
 
     const name =
         prompt(
-            "Gadget name:",
+            "Unit name:",
+            unit.name
+        );
+
+    if(name===null)return;
+
+
+    const brand =
+        prompt(
+            "Brand:",
+            unit.brand
+        );
+
+    if(brand===null)return;
+
+
+    const model =
+        prompt(
+            "Model:",
+            unit.model
+        );
+
+    if(model===null)return;
+
+
+    const color =
+        prompt(
+            "Color:",
+            unit.color
+        );
+
+    if(color===null)return;
+
+
+    const imei =
+        prompt(
+            "IMEI:",
+            unit.imei
+        );
+
+    if(imei===null)return;
+
+
+    const price =
+        prompt(
+            "Price:",
+            unit.price
+        );
+
+    if(price===null)return;
+
+
+    unit.name=name.trim();
+
+    unit.brand=brand.trim();
+
+    unit.model=model.trim();
+
+    unit.color=color.trim();
+
+    unit.imei=imei.trim();
+
+    unit.price=Number(price);
+
+
+    saveData();
+
+    displayUnits();
+
+    updateDashboard();
+}
+
+
+function deleteUnit(id){
+
+    if(
+        !confirm(
+            "Delete this unit?"
+        )
+    )return;
+
+
+    units =
+        units.filter(
+            u => u.id!==id
+        );
+
+
+    saveData();
+
+    displayUnits();
+
+    updateDashboard();
+}
+
+
+/* =====================================================
+   ACCESSORIES
+===================================================== */
+
+function addAccessory(){
+
+    const name =
+        document.getElementById(
+            "accessoryName"
+        ).value.trim();
+
+    const brand =
+        document.getElementById(
+            "accessoryBrand"
+        ).value.trim();
+
+    const color =
+        document.getElementById(
+            "accessoryColor"
+        ).value.trim();
+
+    const stock =
+        Number(
+            document.getElementById(
+                "accessoryStock"
+            ).value
+        );
+
+    const price =
+        Number(
+            document.getElementById(
+                "accessoryPrice"
+            ).value
+        );
+
+
+    if(
+        !name ||
+        !brand ||
+        !color ||
+        stock<=0 ||
+        price<=0
+    ){
+
+        alert(
+            "Please complete all accessory information."
+        );
+
+        return;
+    }
+
+
+    accessories.push({
+
+        id:Date.now(),
+
+        type:"Accessory",
+
+        name:name,
+
+        brand:brand,
+
+        color:color,
+
+        stock:stock,
+
+        price:price,
+
+        addedBy:currentUser,
+
+        addedAt:now()
+
+    });
+
+
+    saveData();
+
+
+    [
+        "accessoryName",
+        "accessoryBrand",
+        "accessoryColor",
+        "accessoryStock",
+        "accessoryPrice"
+
+    ].forEach(id => {
+
+        document.getElementById(id).value="";
+
+    });
+
+
+    displayAccessories();
+
+    updateDashboard();
+}
+
+
+function displayAccessories(){
+
+    const list =
+        document.getElementById(
+            "accessoriesList"
+        );
+
+    const search =
+        document.getElementById(
+            "accessorySearch"
+        ).value.toLowerCase();
+
+
+    list.innerHTML="";
+
+
+    const filtered =
+        accessories.filter(
+            a =>
+            (
+                a.name +
+                " " +
+                a.brand +
+                " " +
+                a.color
+            )
+            .toLowerCase()
+            .includes(search)
+        );
+
+
+    if(filtered.length===0){
+
+        list.innerHTML =
+            "<p class='small'>No accessories found.</p>";
+
+        return;
+    }
+
+
+    filtered.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        div.className="item";
+
+
+        div.innerHTML=`
+
+            <h3>🎧 ${safe(item.name)}</h3>
+
+            <p>
+                <strong>Brand:</strong>
+                ${safe(item.brand)}
+            </p>
+
+            <p>
+                <strong>Color:</strong>
+                ${safe(item.color)}
+            </p>
+
+            <p>
+                <strong>Stock:</strong>
+                ${item.stock}
+            </p>
+
+            <p>
+                <strong>Price:</strong>
+                ${money(item.price)}
+            </p>
+
+            <p>
+                <strong>Added By:</strong>
+                ${safe(item.addedBy)}
+            </p>
+
+            <p class="small">
+                📅 Added:
+                ${safe(item.addedAt)}
+            </p>
+
+            <span class="badge accessorybadge">
+                ACCESSORY
+            </span>
+
+            <button
+                class="green"
+                onclick="sellAccessory(${item.id})">
+                SELL ACCESSORY
+            </button>
+
+            <button
+                class="gray"
+                onclick="editAccessory(${item.id})">
+                EDIT
+            </button>
+
+            <button
+                class="red"
+                onclick="deleteAccessory(${item.id})">
+                DELETE
+            </button>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+}
+
+
+/* =====================================================
+   EDIT ACCESSORY
+===================================================== */
+
+function editAccessory(id){
+
+    const item =
+        accessories.find(
+            a => a.id===id
+        );
+
+
+    if(!item)return;
+
+
+    const name =
+        prompt(
+            "Accessory name:",
             item.name
         );
 
-    if (name === null) return;
+    if(name===null)return;
 
 
     const brand =
@@ -996,16 +1628,16 @@ function editGadget(id) {
             item.brand
         );
 
-    if (brand === null) return;
+    if(brand===null)return;
 
 
-    const price =
+    const color =
         prompt(
-            "Price:",
-            item.price
+            "Color:",
+            item.color
         );
 
-    if (price === null) return;
+    if(color===null)return;
 
 
     const stock =
@@ -1014,162 +1646,894 @@ function editGadget(id) {
             item.stock
         );
 
-    if (stock === null) return;
-
-
-    item.name = name.trim();
-
-    item.brand = brand.trim();
-
-    item.price = Number(price);
-
-    item.stock = Number(stock);
-
-
-    save();
-
-    displayInventory();
-}
-
-
-/* =========================
-   DELETE INVENTORY
-========================= */
-
-function deleteGadget(id) {
-
-    if (
-        !confirm(
-            "Delete this gadget?"
-        )
-    ) return;
-
-
-    inventory =
-        inventory.filter(
-            item => item.id !== id
-        );
-
-
-    save();
-
-    displayInventory();
-}
-
-
-/* =========================
-   EDIT SOLD
-========================= */
-
-function editSale(id) {
-
-    const sale =
-        sales.find(
-            item => item.id === id
-        );
-
-
-    if (!sale) return;
-
-
-    const name =
-        prompt(
-            "Gadget name:",
-            sale.name
-        );
-
-    if (name === null) return;
-
-
-    const brand =
-        prompt(
-            "Brand:",
-            sale.brand
-        );
-
-    if (brand === null) return;
+    if(stock===null)return;
 
 
     const price =
         prompt(
-            "Selling price:",
-            sale.price
+            "Price:",
+            item.price
         );
 
-    if (price === null) return;
+    if(price===null)return;
 
 
-    const customer =
-        prompt(
-            "Customer name:",
-            sale.customer
-        );
+    item.name=name.trim();
 
-    if (customer === null) return;
+    item.brand=brand.trim();
 
+    item.color=color.trim();
 
-    const soldBy =
-        prompt(
-            "Sold By:",
-            sale.soldBy
-        );
+    item.stock=Number(stock);
 
-    if (soldBy === null) return;
+    item.price=Number(price);
 
 
-    sale.name = name.trim();
+    saveData();
 
-    sale.brand = brand.trim();
+    displayAccessories();
 
-    sale.price = Number(price);
-
-    sale.customer =
-        customer.trim();
-
-    sale.soldBy =
-        soldBy.trim();
-
-
-    save();
-
-    displaySales();
+    updateDashboard();
 }
 
 
-/* =========================
-   DELETE SALE
-========================= */
+function deleteAccessory(id){
 
-function deleteSale(id) {
-
-    if (
+    if(
         !confirm(
-            "Delete this sale record?"
+            "Delete this accessory?"
         )
-    ) return;
+    )return;
+
+
+    accessories =
+        accessories.filter(
+            a => a.id!==id
+        );
+
+
+    saveData();
+
+    displayAccessories();
+
+    updateDashboard();
+}
+
+
+/* =====================================================
+   SELL UNIT
+===================================================== */
+
+function sellUnit(id){
+
+    const unit =
+        units.find(
+            u => u.id===id
+        );
+
+
+    if(!unit)return;
+
+
+    const buyer =
+        prompt(
+            "Buyer Name:"
+        );
+
+
+    if(buyer===null)return;
+
+
+    if(!buyer.trim()){
+
+        alert(
+            "Buyer name is required."
+        );
+
+        return;
+    }
+
+
+    const payment =
+        paymentMethod();
+
+
+    if(!payment)return;
+
+
+    const price =
+        prompt(
+            "Selling Price:",
+            unit.price
+        );
+
+
+    if(price===null)return;
+
+
+    const salePrice =
+        Number(price);
+
+
+    if(salePrice<=0){
+
+        alert(
+            "Invalid selling price."
+        );
+
+        return;
+    }
+
+
+    sales.push({
+
+        id:Date.now(),
+
+        type:"Unit",
+
+        itemId:unit.id,
+
+        itemName:unit.name,
+
+        brand:unit.brand,
+
+        model:unit.model,
+
+        color:unit.color,
+
+        imei:unit.imei,
+
+        buyer:buyer.trim(),
+
+        quantity:1,
+
+        price:salePrice,
+
+        payment:payment,
+
+        soldBy:currentUser,
+
+        soldAt:now(),
+
+        originalItem:{
+
+            ...unit
+
+        }
+
+    });
+
+
+    units =
+        units.filter(
+            u => u.id!==id
+        );
+
+
+    saveData();
+
+    displayUnits();
+
+    displaySales();
+
+    updateDashboard();
+
+
+    alert(
+        "Unit sold successfully!"
+    );
+}
+
+
+/* =====================================================
+   SELL ACCESSORY
+===================================================== */
+
+function sellAccessory(id){
+
+    const item =
+        accessories.find(
+            a => a.id===id
+        );
+
+
+    if(!item)return;
+
+
+    if(item.stock<=0){
+
+        alert(
+            "Out of stock."
+        );
+
+        return;
+    }
+
+
+    const quantity =
+        Number(
+            prompt(
+                "Quantity to sell:",
+                1
+            )
+        );
+
+
+    if(
+        !quantity ||
+        quantity<=0 ||
+        quantity>item.stock
+    ){
+
+        alert(
+            "Invalid quantity."
+        );
+
+        return;
+    }
+
+
+    const buyer =
+        prompt(
+            "Buyer Name:"
+        );
+
+
+    if(buyer===null)return;
+
+
+    if(!buyer.trim()){
+
+        alert(
+            "Buyer name is required."
+        );
+
+        return;
+    }
+
+
+    const payment =
+        paymentMethod();
+
+
+    if(!payment)return;
+
+
+    const price =
+        Number(
+            prompt(
+                "Selling Price PER UNIT:",
+                item.price
+            )
+        );
+
+
+    if(!price || price<=0){
+
+        alert(
+            "Invalid price."
+        );
+
+        return;
+    }
+
+
+    sales.push({
+
+        id:Date.now(),
+
+        type:"Accessory",
+
+        itemId:item.id,
+
+        itemName:item.name,
+
+        brand:item.brand,
+
+        model:"N/A",
+
+        color:item.color,
+
+        imei:"N/A",
+
+        buyer:buyer.trim(),
+
+        quantity:quantity,
+
+        price:price * quantity,
+
+        unitPrice:price,
+
+        payment:payment,
+
+        soldBy:currentUser,
+
+        soldAt:now(),
+
+        originalItem:{
+
+            ...item
+
+        }
+
+    });
+
+
+    item.stock -= quantity;
+
+
+    saveData();
+
+    displayAccessories();
+
+    displaySales();
+
+    updateDashboard();
+
+
+    alert(
+        "Accessory sold successfully!"
+    );
+}
+
+
+/* =====================================================
+   SOLD ITEMS
+===================================================== */
+
+function displaySales(){
+
+    const list =
+        document.getElementById(
+            "salesList"
+        );
+
+    const search =
+        document.getElementById(
+            "soldSearch"
+        ).value.toLowerCase();
+
+
+    list.innerHTML="";
+
+
+    const filtered =
+        [...sales]
+        .reverse()
+        .filter(
+            sale =>
+            (
+                sale.itemName +
+                " " +
+                sale.brand +
+                " " +
+                sale.model +
+                " " +
+                sale.color +
+                " " +
+                sale.imei +
+                " " +
+                sale.buyer +
+                " " +
+                sale.soldBy +
+                " " +
+                sale.payment
+            )
+            .toLowerCase()
+            .includes(search)
+        );
+
+
+    if(filtered.length===0){
+
+        list.innerHTML =
+            "<p class='small'>No sold items found.</p>";
+
+        return;
+    }
+
+
+    filtered.forEach(sale => {
+
+        const div =
+            document.createElement("div");
+
+        div.className="item";
+
+
+        const typeBadge =
+            sale.type==="Unit"
+            ? "badge soldbadge"
+            : "badge accessorybadge";
+
+
+        div.innerHTML=`
+
+            <h3>
+                ${sale.type==="Unit" ? "📱" : "🎧"}
+                ${safe(sale.itemName)}
+            </h3>
+
+            <span class="${typeBadge}">
+                ${safe(sale.type)} — SOLD
+            </span>
+
+            <p>
+                <strong>Brand:</strong>
+                ${safe(sale.brand)}
+            </p>
+
+            <p>
+                <strong>Model:</strong>
+                ${safe(sale.model)}
+            </p>
+
+            <p>
+                <strong>Color:</strong>
+                ${safe(sale.color)}
+            </p>
+
+            <p>
+                <strong>IMEI:</strong>
+                ${safe(sale.imei)}
+            </p>
+
+            <p>
+                <strong>Quantity:</strong>
+                ${sale.quantity}
+            </p>
+
+            <p>
+                <strong>Buyer:</strong>
+                ${safe(sale.buyer)}
+            </p>
+
+            <p>
+                <strong>Selling Price:</strong>
+                ${money(sale.price)}
+            </p>
+
+            <p>
+                <strong>Mode of Payment:</strong>
+                ${safe(sale.payment)}
+            </p>
+
+            <p>
+                🔒 <strong>Sold By:</strong>
+                ${safe(sale.soldBy)}
+            </p>
+
+            <p class="small">
+                📅 <strong>Date & Time Sold:</strong><br>
+                ${safe(sale.soldAt)}
+            </p>
+
+            <button
+                class="gray"
+                onclick="editSale(${sale.id})">
+                EDIT SOLD ITEM
+            </button>
+
+            <button
+                class="red"
+                onclick="deleteSale(${sale.id})">
+                DELETE SALE
+            </button>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+}
+
+
+/* =====================================================
+   EDIT SALE
+   SOLD BY IS NOT EDITABLE
+===================================================== */
+
+function editSale(id){
+
+    const sale =
+        sales.find(
+            s => s.id===id
+        );
+
+
+    if(!sale)return;
+
+
+    const buyer =
+        prompt(
+            "Buyer Name:",
+            sale.buyer
+        );
+
+    if(buyer===null)return;
+
+
+    const color =
+        prompt(
+            "Color:",
+            sale.color
+        );
+
+    if(color===null)return;
+
+
+    const price =
+        prompt(
+            "Selling Price:",
+            sale.price
+        );
+
+    if(price===null)return;
+
+
+    const payment =
+        prompt(
+            "Mode of Payment:",
+            sale.payment
+        );
+
+    if(payment===null)return;
+
+
+    sale.buyer=buyer.trim();
+
+    sale.color=color.trim();
+
+    sale.price=Number(price);
+
+    sale.payment=payment.trim();
+
+
+    /* IMPORTANT:
+       soldBy is intentionally NOT changed.
+    */
+
+
+    saveData();
+
+    displaySales();
+
+    updateDashboard();
+}
+
+
+/* =====================================================
+   DELETE SALE + RESTORE STOCK
+===================================================== */
+
+function deleteSale(id){
+
+    const sale =
+        sales.find(
+            s => s.id===id
+        );
+
+
+    if(!sale)return;
+
+
+    if(
+        !confirm(
+            "Delete this sale and restore the item to inventory?"
+        )
+    )return;
+
+
+    if(sale.type==="Unit"){
+
+        const alreadyExists =
+            units.some(
+                u => u.imei===sale.imei
+            );
+
+
+        if(!alreadyExists){
+
+            units.push({
+
+                ...sale.originalItem
+
+            });
+
+        }
+
+    }else{
+
+        const accessory =
+            accessories.find(
+                a => a.id===sale.itemId
+            );
+
+
+        if(accessory){
+
+            accessory.stock +=
+                sale.quantity;
+
+        }else{
+
+            accessories.push({
+
+                ...sale.originalItem,
+
+                stock:
+                    Number(
+                        sale.originalItem.stock
+                    )
+
+            });
+
+        }
+
+    }
 
 
     sales =
         sales.filter(
-            item => item.id !== id
+            s => s.id!==id
         );
 
 
-    save();
+    saveData();
+
+    displayUnits();
+
+    displayAccessories();
 
     displaySales();
+
+    updateDashboard();
 }
 
 
-/* =========================
-   START APP
-========================= */
+/* =====================================================
+   REPORTS
+===================================================== */
 
-if (currentUser) {
+function printInventory(){
+
+    showSection("unitsSection");
+
+    window.print();
+}
+
+
+function printSales(){
+
+    showSection("soldSection");
+
+    window.print();
+}
+
+
+/* =====================================================
+   CSV
+===================================================== */
+
+function downloadFile(
+    filename,
+    content
+){
+
+    const blob =
+        new Blob(
+            [content],
+            {
+                type:"text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=filename;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(url);
+}
+
+
+function csv(value){
+
+    return '"' +
+        String(value ?? "")
+        .replaceAll('"','""') +
+        '"';
+}
+
+
+function downloadInventoryCSV(){
+
+    let rows=[];
+
+
+    rows.push([
+        "Type",
+        "Item",
+        "Brand",
+        "Model",
+        "Color",
+        "IMEI",
+        "Stock",
+        "Price",
+        "Added By",
+        "Date & Time Added"
+    ]);
+
+
+    units.forEach(u => {
+
+        rows.push([
+
+            "Unit",
+
+            u.name,
+
+            u.brand,
+
+            u.model,
+
+            u.color,
+
+            u.imei,
+
+            1,
+
+            u.price,
+
+            u.addedBy,
+
+            u.addedAt
+
+        ]);
+
+    });
+
+
+    accessories.forEach(a => {
+
+        rows.push([
+
+            "Accessory",
+
+            a.name,
+
+            a.brand,
+
+            "N/A",
+
+            a.color,
+
+            "N/A",
+
+            a.stock,
+
+            a.price,
+
+            a.addedBy,
+
+            a.addedAt
+
+        ]);
+
+    });
+
+
+    const content =
+        rows
+        .map(
+            row =>
+            row.map(csv).join(",")
+        )
+        .join("\n");
+
+
+    downloadFile(
+        "MG-Gadgets-Inventory.csv",
+        content
+    );
+}
+
+
+function downloadSalesCSV(){
+
+    let rows=[];
+
+
+    rows.push([
+
+        "Type",
+        "Item",
+        "Brand",
+        "Model",
+        "Color",
+        "IMEI",
+        "Quantity",
+        "Buyer",
+        "Selling Price",
+        "Payment",
+        "Sold By",
+        "Date & Time Sold"
+
+    ]);
+
+
+    sales.forEach(sale => {
+
+        rows.push([
+
+            sale.type,
+
+            sale.itemName,
+
+            sale.brand,
+
+            sale.model,
+
+            sale.color,
+
+            sale.imei,
+
+            sale.quantity,
+
+            sale.buyer,
+
+            sale.price,
+
+            sale.payment,
+
+            sale.soldBy,
+
+            sale.soldAt
+
+        ]);
+
+    });
+
+
+    const content =
+        rows
+        .map(
+            row =>
+            row.map(csv).join(",")
+        )
+        .join("\n");
+
+
+    downloadFile(
+        "MG-Gadgets-Sales.csv",
+        content
+    );
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+if(currentUser){
 
     openApp();
 
-} else {
+}else{
 
     showLogin();
 
@@ -1178,4 +2542,4 @@ if (currentUser) {
 </script>
 
 </body>
-</html>    
+</html>
