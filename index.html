@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MG Gadgets Inventory</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f2f4f7;
+    color: #222;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+input, select, button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 9px;
+    margin-bottom: 10px;
+    border-radius: 9px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.btn-danger {
+    background: #dc2626;
+}
+
+.btn-green {
+    background: #16a34a;
+}
+
+.btn-gray {
+    background: #6b7280;
+}
+
+.hidden {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.gadget {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 12px;
+}
+
+.gadget h3 {
+    margin-top: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #16a34a;
+    color: white;
+    font-size: 12px;
+}
+
+.sold {
+    background: #dc2626;
+}
+
+.top-user {
+    background: #e5e7eb;
+    padding: 10px;
+    border-radius: 9px;
+    margin-bottom: 15px;
+}
+
+.small {
+    font-size: 13px;
+    color: #666;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 18px 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📱 MG Gadgets Inventory</h1>
+</header>
+
+<div class="container">
+
+<!-- LOGIN -->
+<div id="loginPage" class="card">
+    <h2>Login</h2>
+
+    <input id="loginUsername" type="text" placeholder="Username">
+    <input id="loginPassword" type="password" placeholder="Password">
+
+    <button onclick="login()">LOGIN</button>
+
+    <button class="btn-gray" onclick="showRegister()">
+        CREATE ACCOUNT
+    </button>
+
+    <p id="loginMessage" class="small"></p>
+</div>
+
+
+<!-- REGISTER -->
+<div id="registerPage" class="card hidden">
+    <h2>Register</h2>
+
+    <input id="registerUsername" type="text" placeholder="Username">
+    <input id="registerPassword" type="password" placeholder="Password">
+    <input id="registerConfirm" type="password" placeholder="Confirm Password">
+
+    <button class="btn-green" onclick="register()">
+        CREATE ACCOUNT
+    </button>
+
+    <button class="btn-gray" onclick="showLogin()">
+        BACK TO LOGIN
+    </button>
+
+    <p id="registerMessage" class="small"></p>
+</div>
+
+
+<!-- APP -->
+<div id="appPage" class="hidden">
+
+    <div class="top-user">
+        👤 Logged in as:
+        <strong id="currentUser"></strong>
+    </div>
+
+    <button class="btn-danger" onclick="logout()">
+        LOGOUT
+    </button>
+
+
+    <!-- ADD GADGET -->
+    <div class="card">
+        <h2>➕ Add Gadget</h2>
+
+        <input id="gadgetName" type="text" placeholder="Gadget Name">
+
+        <input id="gadgetBrand" type="text" placeholder="Brand">
+
+        <input id="gadgetPrice" type="number" placeholder="Price">
+
+        <input id="gadgetStock" type="number" placeholder="Quantity">
+
+        <button class="btn-green" onclick="addGadget()">
+            ADD GADGET
+        </button>
+    </div>
+
+
+    <!-- INVENTORY -->
+    <div class="card">
+        <h2>📦 Inventory</h2>
+
+        <input
+            id="searchBox"
+            type="text"
+            placeholder="Search gadget..."
+            oninput="displayInventory()"
+        >
+
+        <div id="inventoryList"></div>
+    </div>
+
+
+    <!-- SOLD
